@@ -1,28 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maria Auto & Traffic School — Dade County's #1 Driving School</title>
+<title>Maria Auto & Traffic School — Dade County's Trusted Driving School</title>
 
-<!-- SEO -->
-<meta name="description" content="Maria Auto & Traffic School — Dade County's most trusted driving school. Written tests, practical road exams, and driving lessons in English and Spanish. No appointment needed. 5-star rated.">
-<meta name="keywords" content="driving school miami, driving school dade county, traffic school miami, driving test miami, licencia de conducir miami, autoescuela miami">
+<meta name="description" content="Maria Auto & Traffic School — Miami-Dade's trusted driving school. Written tests, road exams, and driving lessons in English and Spanish. Walk-ins welcome.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mariaautoschool.netlify.app/">
-
-<!-- Open Graph (Facebook, WhatsApp, iMessage previews) -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://mariaautoschool.netlify.app/">
-<meta property="og:title" content="Maria Auto & Traffic School — Dade County's #1 Driving School">
-<meta property="og:description" content="5-star rated driving school in Miami-Dade. Written tests, road exams & driving lessons in English and Spanish. No appointment needed.">
-<meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="es_US">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Maria Auto & Traffic School">
-<meta name="twitter:description" content="Dade County's most trusted driving school. 5-star rated. English & Spanish.">
+<meta property="og:title" content="Maria Auto & Traffic School">
+<meta property="og:description" content="Miami-Dade's trusted driving school. Written tests, road exams & driving lessons in English and Spanish.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&display=swap" rel="stylesheet">
@@ -39,662 +27,268 @@
     --text-mid: #4a5568;
     --text-light: #8a97a8;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--warm-white);
-    color: var(--text-dark);
-    overflow-x: hidden;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--text-dark); overflow-x: hidden; }
 
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 22px 60px;
-    background: rgba(13,31,60,0.95);
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 16px 40px;
+    background: rgba(13,31,60,0.96);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(201,168,76,0.2);
   }
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem; font-weight: 700;
-    color: var(--gold-light);
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-  }
-  .nav-logo span { display: block; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,201,122,0.6); font-family: 'DM Sans', sans-serif; }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--gold-light); line-height: 1.2; white-space: nowrap; }
+  .nav-logo span { display: block; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(232,201,122,0.6); font-family: 'DM Sans', sans-serif; }
+  .nav-links { display: flex; gap: 28px; list-style: none; flex: 1; justify-content: center; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--gold-light); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .lang-switch { position: relative; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8); padding: 8px 12px; border-radius: 6px;
+    font-size: 0.78rem; letter-spacing: 0.05em; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .lang-btn:hover { border-color: var(--gold); }
+  .lang-menu {
+    display: none; position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px; overflow: hidden; min-width: 140px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+  .lang-menu.open { display: block; }
+  .lang-option {
+    display: block; width: 100%; text-align: left; padding: 10px 16px;
+    background: none; border: none; color: rgba(255,255,255,0.75);
+    font-size: 0.82rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .lang-option:hover { background: rgba(201,168,76,0.12); color: var(--gold-light); }
+  .lang-option.active { color: var(--gold-light); background: rgba(201,168,76,0.08); }
   .nav-cta {
     background: var(--gold); color: var(--navy);
-    padding: 10px 26px; border-radius: 2px;
-    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    padding: 9px 20px; border-radius: 2px;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap;
   }
   .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    background: var(--navy);
-    display: grid; grid-template-columns: 1fr 1fr;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg-texture {
-    position: absolute; inset: 0;
-    background-image:
-      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,112,74,0.06) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .hero-grid-overlay {
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 140px 60px 80px 80px;
-    position: relative; z-index: 2;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
-    padding: 8px 18px; border-radius: 100px;
-    margin-bottom: 32px; width: fit-content;
-  }
-  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-  .hero-badge span { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light); }
-  .hero-headline {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 900; line-height: 1.0;
-    color: #fff; margin-bottom: 10px;
-  }
-  .hero-headline em {
-    font-style: italic; color: var(--gold-light);
-    display: block;
-  }
-  .hero-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem; font-weight: 300; font-style: italic;
-    color: rgba(255,255,255,0.5); margin-bottom: 40px; margin-top: 14px;
-    letter-spacing: 0.02em;
-  }
-  .hero-body {
-    color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.75;
-    max-width: 420px; margin-bottom: 48px;
-  }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--gold); color: var(--navy);
-    padding: 16px 36px; border-radius: 2px;
-    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    text-decoration: none; transition: all 0.2s;
-    box-shadow: 0 4px 24px rgba(201,168,76,0.35);
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.45); }
-  .btn-secondary {
-    border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8);
-    padding: 16px 36px; border-radius: 2px;
-    font-size: 0.85rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
-    text-decoration: none; transition: all 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
-  .hero-right {
-    display: flex; align-items: center; justify-content: center;
-    position: relative; z-index: 2; padding: 140px 80px 80px 40px;
-  }
-  .hero-card-stack { position: relative; width: 340px; }
-  .hero-stat-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 12px; padding: 28px 32px;
-    backdrop-filter: blur(8px);
-    position: relative;
-  }
-  .hero-stat-card + .hero-stat-card { margin-top: 16px; }
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.2rem; font-weight: 900; color: var(--gold-light);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: rgba(255,255,255,0.45); margin-top: 6px;
-  }
-  .stars-row { display: flex; gap: 3px; margin-bottom: 8px; }
-  .star { color: var(--gold); font-size: 1.1rem; }
-  .floating-tag {
-    position: absolute; right: -24px; top: 50%;
-    transform: translateY(-50%);
-    background: var(--coral); color: #fff;
-    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 100px;
-    white-space: nowrap;
-  }
-
-  /* ── SERVICES ── */
-  .section-label {
-    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 14px;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.15;
-    color: var(--text-dark);
-  }
-  .services {
-    padding: 120px 80px;
-    background: var(--cream);
-    position: relative;
-  }
-  .services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 70px; align-items: end; }
-  .services-desc { color: var(--text-mid); font-size: 1.05rem; line-height: 1.8; }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .service-card {
-    background: #fff; border-radius: 12px;
-    padding: 44px 36px;
-    border: 1px solid rgba(0,0,0,0.06);
-    transition: all 0.3s; cursor: default;
-    position: relative; overflow: hidden;
-  }
-  .service-card::before {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--gold), var(--coral));
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(13,31,60,0.1); }
-  .service-card:hover::before { transform: scaleX(1); }
-  .service-icon {
-    width: 54px; height: 54px; border-radius: 10px;
-    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(232,112,74,0.08));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; margin-bottom: 24px;
-  }
-  .service-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem; font-weight: 700; margin-bottom: 12px;
-    color: var(--navy);
-  }
-  .service-desc { font-size: 0.93rem; line-height: 1.75; color: var(--text-mid); }
-
-  /* ── WHY CHOOSE US ── */
-  .why {
-    padding: 120px 80px;
-    background: var(--navy);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    position: relative; overflow: hidden;
-  }
-  .why::before {
-    content: '';
-    position: absolute; right: -100px; top: -100px;
-    width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .why .section-title { color: #fff; }
-  .why-body { color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.8; margin: 24px 0 40px; }
-  .why-features { display: flex; flex-direction: column; gap: 0; }
-  .why-feature {
-    display: flex; gap: 20px; align-items: flex-start;
-    padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  .why-feature:last-child { border-bottom: none; }
-  .why-feature-icon {
-    width: 42px; height: 42px; border-radius: 8px;
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-  }
-  .why-feature-text h4 { color: #fff; font-size: 0.95rem; font-weight: 500; margin-bottom: 4px; }
-  .why-feature-text p { color: rgba(255,255,255,0.45); font-size: 0.88rem; line-height: 1.6; }
-  .why-right { display: flex; flex-direction: column; gap: 20px; }
-  .why-big-stat {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 16px; padding: 44px;
-    text-align: center;
-  }
-  .why-big-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem; font-weight: 900; color: var(--gold-light);
-    line-height: 1;
-  }
-  .why-big-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 8px; }
-  .why-mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .why-mini {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px; padding: 28px 24px; text-align: center;
-  }
-  .why-mini-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem; font-weight: 700; color: var(--gold-light);
-  }
-  .why-mini-label { color: rgba(255,255,255,0.4); font-size: 0.77rem; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 5px; }
-
-  /* ── REVIEWS ── */
-  .reviews {
-    padding: 120px 80px;
-    background: var(--warm-white);
-    overflow: hidden;
-  }
-  .reviews-header { text-align: center; margin-bottom: 70px; }
-  .reviews-header .section-title { margin-bottom: 16px; }
-  .reviews-sub { color: var(--text-mid); font-size: 1rem; max-width: 500px; margin: 0 auto; line-height: 1.7; }
-  .reviews-track-wrap { overflow: hidden; margin: 0 -80px; }
-  .reviews-track {
-    display: flex; gap: 24px;
-    animation: scroll-left 40s linear infinite;
-    width: max-content; padding: 10px 80px;
-  }
-  .reviews-track:hover { animation-play-state: paused; }
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .review-card {
-    background: #fff; border-radius: 14px;
-    padding: 32px 28px; width: 300px; flex-shrink: 0;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 2px 16px rgba(13,31,60,0.05);
-  }
-  .review-stars { display: flex; gap: 3px; margin-bottom: 14px; }
-  .review-text { font-size: 0.92rem; line-height: 1.75; color: var(--text-mid); margin-bottom: 20px; font-style: italic; }
-  .review-author { font-size: 0.82rem; font-weight: 500; color: var(--navy); }
-  .review-time { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
-  .quote-mark {
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem; color: var(--gold); line-height: 0.6;
-    display: block; margin-bottom: 10px; opacity: 0.3;
-  }
-  .google-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 40px; justify-content: center; width: 100%;
-    background: #fff; border: 1px solid rgba(0,0,0,0.1);
-    padding: 14px 28px; border-radius: 8px;
-    font-size: 0.85rem; color: var(--text-mid);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    width: fit-content; margin: 40px auto 0;
-  }
-  .g-logo { font-weight: 700; font-size: 1rem; background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-  /* ── PROCESS ── */
-  .process {
-    padding: 120px 80px;
-    background: var(--cream);
-  }
-  .process-header { text-align: center; margin-bottom: 80px; }
-  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
-  .process-steps::before {
-    content: '';
-    position: absolute; top: 40px; left: 12.5%; right: 12.5%;
-    height: 1px; background: linear-gradient(90deg, var(--gold), var(--coral), var(--gold));
-    opacity: 0.3;
-  }
-  .process-step { text-align: center; padding: 0 20px; }
-  .step-num {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: #fff; border: 2px solid rgba(201,168,76,0.3);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 28px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; font-weight: 700; color: var(--gold);
-    position: relative; z-index: 1;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.15);
-  }
-  .step-title { font-size: 1rem; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
-  .step-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; }
-
-  /* ── CONTACT ── */
-  .contact {
-    padding: 120px 80px;
-    background: var(--navy);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-    position: relative; overflow: hidden;
-  }
-  .contact::after {
-    content: '';
-    position: absolute; left: -120px; bottom: -120px;
-    width: 400px; height: 400px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(232,112,74,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .contact .section-title { color: #fff; margin-bottom: 16px; }
-  .contact-body { color: rgba(255,255,255,0.5); font-size: 1rem; line-height: 1.8; margin-bottom: 40px; }
-  .contact-info { display: flex; flex-direction: column; gap: 20px; }
-  .contact-item { display: flex; gap: 16px; align-items: center; }
-  .contact-icon {
-    width: 44px; height: 44px; border-radius: 8px;
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-  }
-  .contact-item-text { color: rgba(255,255,255,0.75); font-size: 0.95rem; line-height: 1.5; }
-  .contact-item-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2px; }
-  .contact-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15); border-radius: 16px; padding: 44px; }
-  .contact-form h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: #fff; margin-bottom: 28px;
-  }
-  .form-group { margin-bottom: 20px; }
-  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px; padding: 14px 16px;
-    color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.93rem;
-    outline: none; transition: border-color 0.2s;
-    -webkit-appearance: none; appearance: none;
-  }
-  .form-group select option { background: var(--navy-mid); color: #fff; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: rgba(201,168,76,0.4);
-  }
-  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
-  .form-group textarea { height: 110px; resize: none; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .btn-submit {
-    width: 100%; padding: 16px;
-    background: var(--gold); color: var(--navy);
-    border: none; border-radius: 6px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
-    margin-top: 8px;
-  }
-  .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: #080f1e;
-    padding: 60px 80px 40px;
-    border-top: 1px solid rgba(201,168,76,0.1);
-  }
-  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 50px; }
-  .footer-brand h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem; color: var(--gold-light); margin-bottom: 12px;
-  }
-  .footer-brand p { color: rgba(255,255,255,0.35); font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
-  .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 18px; }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .footer-col ul a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
-  .footer-col ul a:hover { color: var(--gold-light); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
-  .footer-bottom p { color: rgba(255,255,255,0.25); font-size: 0.8rem; }
-  .footer-dade {
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
-    padding: 6px 14px; border-radius: 100px;
-    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
-  }
-
-  /* ── DECORATIVE DIVIDER ── */
-  .divider { display: flex; align-items: center; justify-content: center; padding: 0; line-height: 0; }
-  .divider svg { width: 100%; height: 60px; display: block; }
-
-  /* ── SCROLL ANIMATIONS ── */
-  .fade-up {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-  .fade-up:nth-child(2) { transition-delay: 0.1s; }
-  .fade-up:nth-child(3) { transition-delay: 0.2s; }
-  .fade-up:nth-child(4) { transition-delay: 0.3s; }
-
-  /* ── HAMBURGER ── */
-  .nav-hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 4px;
-  }
-  .nav-hamburger span {
-    display: block; width: 24px; height: 2px;
-    background: rgba(255,255,255,0.8);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.8); border-radius: 2px; transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-hamburger.open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   .mobile-menu {
-    display: none;
-    position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
-    background: rgba(13,31,60,0.98);
-    backdrop-filter: blur(16px);
+    display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+    background: rgba(13,31,60,0.98); backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(201,168,76,0.15);
-    padding: 24px 28px 32px;
-    flex-direction: column; gap: 0;
-    transform: translateY(-10px); opacity: 0;
-    transition: all 0.25s ease;
+    padding: 20px 24px 26px; flex-direction: column;
   }
-  .mobile-menu.open {
-    display: flex; opacity: 1; transform: translateY(0);
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 1rem; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .mobile-menu a:last-of-type { border-bottom: none; }
+  .mobile-lang { display: flex; gap: 10px; margin-top: 16px; }
+  .mobile-lang button {
+    flex: 1; padding: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.75); border-radius: 6px; font-size: 0.82rem; cursor: pointer;
   }
-  .mobile-menu a {
-    color: rgba(255,255,255,0.75); text-decoration: none;
-    font-size: 1.05rem; letter-spacing: 0.06em;
-    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
-    transition: color 0.2s;
-  }
-  .mobile-menu a:last-child { border-bottom: none; }
-  .mobile-menu a:hover { color: var(--gold-light); }
-  .mobile-menu .mobile-cta {
-    margin-top: 20px;
-    background: var(--gold); color: var(--navy);
-    padding: 14px 24px; border-radius: 4px; text-align: center;
-    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.88rem;
-  }
+  .mobile-lang button.active { color: var(--gold-light); border-color: var(--gold); }
 
-  /* ── FORM VALIDATION ── */
-  .form-group input:invalid:not(:placeholder-shown),
-  .form-group select:invalid:not(:placeholder-shown) {
-    border-color: rgba(232,112,74,0.5);
-  }
-  .form-group input:valid:not(:placeholder-shown) {
-    border-color: rgba(76,175,122,0.4);
-  }
-  .field-error {
-    font-size: 0.75rem; color: var(--coral);
-    margin-top: 5px; display: none;
-  }
+  /* ── SHARED ── */
+  .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.15; color: var(--text-dark); }
 
-  /* ── SUCCESS MESSAGE ── */
-  .form-success {
-    display: none;
-    text-align: center; padding: 40px 20px;
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy); display: grid; grid-template-columns: 1.1fr 0.9fr;
+    position: relative; overflow: hidden; padding-top: 60px;
   }
-  .form-success-icon {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: rgba(76,175,122,0.15); border: 2px solid rgba(76,175,122,0.4);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; margin: 0 auto 20px;
-  }
-  .form-success h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: #fff; margin-bottom: 10px;
-  }
-  .form-success p { color: rgba(255,255,255,0.5); font-size: 0.93rem; line-height: 1.7; }
+  .hero-bg-texture { position: absolute; inset: 0; background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,112,74,0.06) 0%, transparent 50%); pointer-events: none; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 56px 40px 56px 56px; position: relative; z-index: 2; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; width: fit-content; }
+  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+  .hero-badge span { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); }
+  .hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(2.3rem, 4vw, 3.8rem); font-weight: 900; line-height: 1.02; color: #fff; margin-bottom: 6px; }
+  .hero-headline em { font-style: italic; color: var(--gold-light); display: block; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.5); margin: 10px 0 22px; }
+  .hero-body { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.7; max-width: 420px; margin-bottom: 30px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 30px; border-radius: 2px; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary { border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); padding: 14px 30px; border-radius: 2px; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+  .hero-right { display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; padding: 40px 56px 40px 20px; }
+  .hero-photo-wrap { width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px; }
+  .hero-photo { position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(201,168,76,0.2); aspect-ratio: 5/4; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.9) saturate(0.92); }
+  .hero-photo-badge { position: absolute; bottom: 12px; left: 12px; background: rgba(13,31,60,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(201,168,76,0.3); padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; color: var(--gold-light); letter-spacing: 0.05em; }
+  .hero-stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hero-stat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 16px 18px; text-align: center; }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--gold-light); line-height: 1; }
+  .stat-label { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+  /* ── SERVICES ── */
+  .services { padding: 70px 56px; background: var(--cream); }
+  .services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 44px; align-items: end; }
+  .services-desc { color: var(--text-mid); font-size: 0.95rem; line-height: 1.7; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .service-card { background: #fff; border-radius: 12px; padding: 30px 26px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--coral)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(13,31,60,0.1); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { width: 44px; height: 44px; border-radius: 9px; background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(232,112,74,0.08)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 16px; }
+  .service-name { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; margin-bottom: 8px; color: var(--navy); }
+  .service-desc { font-size: 0.86rem; line-height: 1.65; color: var(--text-mid); }
+
+  /* ── WHY US ── */
+  .why { padding: 70px 56px; background: var(--navy); display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; position: relative; overflow: hidden; }
+  .why::before { content: ''; position: absolute; right: -100px; top: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events: none; }
+  .why .section-title { color: #fff; }
+  .why-body { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; margin: 18px 0 26px; }
+  .why-features { display: flex; flex-direction: column; }
+  .why-feature { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .why-feature:last-child { border-bottom: none; }
+  .why-feature-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .why-feature-text h4 { color: #fff; font-size: 0.9rem; font-weight: 500; margin-bottom: 3px; }
+  .why-feature-text p { color: rgba(255,255,255,0.45); font-size: 0.83rem; line-height: 1.55; }
+  .why-right { display: flex; flex-direction: column; gap: 14px; }
+  .why-photo-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; }
+  .why-photo-main { border-radius: 12px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.4); border: 1px solid rgba(201,168,76,0.15); aspect-ratio: 3/4; }
+  .why-photo-side { display: flex; flex-direction: column; gap: 12px; }
+  .why-photo-small { border-radius: 12px; overflow: hidden; box-shadow: 0 12px 32px rgba(0,0,0,0.35); border: 1px solid rgba(201,168,76,0.15); aspect-ratio: 4/3; flex: 1; }
+  .why-photo-main img, .why-photo-small img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.92) saturate(0.88); }
+  .why-mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .why-mini { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; padding: 14px 10px; text-align: center; }
+  .why-mini-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold-light); }
+  .why-mini-label { color: rgba(255,255,255,0.4); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 3px; }
+
+  /* ── REVIEWS ── */
+  .reviews { padding: 70px 0; background: var(--warm-white); overflow: hidden; }
+  .reviews-header { text-align: center; margin-bottom: 40px; padding: 0 56px; }
+  .reviews-header .section-title { margin-bottom: 10px; }
+  .reviews-sub { color: var(--text-mid); font-size: 0.92rem; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+  .reviews-rating-badge { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid rgba(0,0,0,0.08); padding: 10px 20px; border-radius: 100px; margin-top: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+  .reviews-rating-badge .stars { color: var(--gold); font-size: 0.95rem; letter-spacing: 1px; }
+  .reviews-rating-badge .num { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--navy); font-size: 1rem; }
+  .reviews-rating-badge .count { color: var(--text-light); font-size: 0.82rem; }
+  .reviews-track-wrap { overflow: hidden; }
+  .reviews-track { display: flex; gap: 18px; animation: scroll-left 42s linear infinite; width: max-content; padding: 6px 56px; }
+  .reviews-track:hover { animation-play-state: paused; }
+  @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .review-card { background: #fff; border-radius: 12px; padding: 24px 22px; width: 270px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 14px rgba(13,31,60,0.05); }
+  .review-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 10px; letter-spacing: 1px; }
+  .review-text { font-size: 0.85rem; line-height: 1.65; color: var(--text-mid); margin-bottom: 14px; font-style: italic; }
+  .review-author { font-size: 0.8rem; font-weight: 500; color: var(--navy); }
+  .review-time { font-size: 0.72rem; color: var(--text-light); margin-top: 2px; }
+  .google-badge { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid rgba(0,0,0,0.1); padding: 12px 24px; border-radius: 8px; font-size: 0.82rem; color: var(--text-mid); box-shadow: 0 2px 12px rgba(0,0,0,0.05); width: fit-content; margin: 32px auto 0; }
+  .g-logo { font-weight: 700; font-size: 0.95rem; background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* ── PROCESS ── */
+  .process { padding: 70px 56px; background: var(--cream); }
+  .process-header { text-align: center; margin-bottom: 50px; }
+  .process-header p { color: var(--text-mid); font-size: 0.92rem; max-width: 440px; margin: 8px auto 0; line-height: 1.6; }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+  .process-steps::before { content: ''; position: absolute; top: 32px; left: 12.5%; right: 12.5%; height: 1px; background: linear-gradient(90deg, var(--gold), var(--coral), var(--gold)); opacity: 0.3; }
+  .process-step { text-align: center; padding: 0 16px; }
+  .step-num { width: 64px; height: 64px; border-radius: 50%; background: #fff; border: 2px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); position: relative; z-index: 1; box-shadow: 0 4px 16px rgba(201,168,76,0.15); }
+  .step-title { font-size: 0.92rem; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+  .step-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  .contact { padding: 70px 56px; background: var(--navy); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; position: relative; overflow: hidden; }
+  .contact::after { content: ''; position: absolute; left: -100px; bottom: -100px; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle, rgba(232,112,74,0.08) 0%, transparent 70%); pointer-events: none; }
+  .contact .section-title { color: #fff; margin-bottom: 12px; }
+  .contact-body { color: rgba(255,255,255,0.5); font-size: 0.92rem; line-height: 1.7; margin-bottom: 26px; }
+  .contact-storefront { border-radius: 12px; overflow: hidden; margin-bottom: 26px; box-shadow: 0 12px 32px rgba(0,0,0,0.3); border: 1px solid rgba(201,168,76,0.15); aspect-ratio: 16/9; max-height: 220px; }
+  .contact-storefront img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) saturate(0.85); }
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item { display: flex; gap: 14px; align-items: center; }
+  .contact-icon { width: 38px; height: 38px; border-radius: 8px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .contact-item-text { color: rgba(255,255,255,0.75); font-size: 0.88rem; line-height: 1.5; }
+  .contact-item-text a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .contact-item-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2px; }
+  .contact-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15); border-radius: 14px; padding: 34px; }
+  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff; margin-bottom: 22px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 12px 14px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+  .form-group select option { background: var(--navy-mid); color: #fff; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(201,168,76,0.4); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group textarea { height: 90px; resize: none; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .btn-submit { width: 100%; padding: 14px; background: var(--gold); color: var(--navy); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 18px rgba(201,168,76,0.3); margin-top: 4px; }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.7; cursor: default; transform: none; }
+  .form-success { display: none; text-align: center; padding: 30px 16px; }
+  .form-success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(76,175,122,0.15); border: 2px solid rgba(76,175,122,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 16px; }
+  .form-success h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 8px; }
+  .form-success p { color: rgba(255,255,255,0.5); font-size: 0.88rem; line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  footer { background: #080f1e; padding: 44px 56px 30px; border-top: 1px solid rgba(201,168,76,0.1); }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 34px; }
+  .footer-brand h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold-light); margin-bottom: 10px; }
+  .footer-brand p { color: rgba(255,255,255,0.35); font-size: 0.85rem; line-height: 1.65; max-width: 300px; }
+  .footer-contact-mini { margin-top: 14px; font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.8; }
+  .footer-contact-mini a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--gold-light); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
+  .footer-bottom a { color: rgba(255,255,255,0.3); }
+  .footer-dade { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); padding: 5px 12px; border-radius: 100px; font-size: 0.68rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(8,15,30,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--warm-white); border-radius: 16px; max-width: 700px; width: 100%; max-height: 86vh; display: flex; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.5); animation: modal-in 0.25s ease; }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 32px 18px; border-bottom: 1px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+  .modal-header h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy); }
+  .modal-close { background: rgba(0,0,0,0.06); border: none; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; color: var(--text-mid); display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+  .modal-close:hover { background: rgba(0,0,0,0.12); }
+  .modal-body { overflow-y: auto; padding: 24px 32px 32px; }
+  .modal-body .updated { color: var(--text-light); font-size: 0.8rem; margin-bottom: 22px; }
+  .modal-body h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--navy); margin: 22px 0 8px; }
+  .modal-body h3:first-of-type { margin-top: 0; }
+  .modal-body p { color: var(--text-mid); font-size: 0.9rem; line-height: 1.75; margin-bottom: 10px; }
+  .modal-body ul { color: var(--text-mid); font-size: 0.9rem; line-height: 1.75; padding-left: 20px; margin-bottom: 10px; }
+  .modal-body a { color: var(--gold); }
 
   @media (max-width: 900px) {
-    nav { padding: 18px 24px; }
+    nav { padding: 14px 20px; }
     .nav-links { display: none; }
     .nav-cta { display: none; }
     .nav-hamburger { display: flex; }
-    .hero { grid-template-columns: 1fr; padding-top: 80px; }
-    .hero-left { padding: 60px 24px 40px; }
-    .hero-right { display: none; }
-    .services, .why, .reviews, .process, .contact, footer { padding: 80px 24px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 40px 20px 30px; }
+    .hero-right { padding: 0 20px 40px; }
+    .hero-photo-wrap { max-width: 100%; }
+    .services, .why, .reviews-header, .process, .contact, footer { padding-left: 20px; padding-right: 20px; }
+    .services, .why, .process, .contact { padding-top: 50px; padding-bottom: 50px; }
     .services-header, .why, .contact { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: 1fr; }
-    .process-steps { grid-template-columns: 1fr 1fr; }
+    .why-photo-grid { grid-template-columns: 1fr; }
+    .why-photo-main { aspect-ratio: 16/9; }
+    .process-steps { grid-template-columns: 1fr 1fr; row-gap: 30px; }
     .process-steps::before { display: none; }
-    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
-    .why-mini-stats { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+    .why-mini-stats { grid-template-columns: repeat(3, 1fr); }
     .form-row { grid-template-columns: 1fr; }
-  }
-
-  /* ── PHOTOS ── */
-  .hero-photo {
-    position: relative; border-radius: 16px; overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-    border: 1px solid rgba(201,168,76,0.2);
-  }
-  .hero-photo img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    filter: brightness(0.88) saturate(0.9);
-  }
-  .hero-photo-badge {
-    position: absolute; bottom: 16px; left: 16px;
-    background: rgba(13,31,60,0.85); backdrop-filter: blur(8px);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 8px 14px; border-radius: 8px;
-    font-size: 0.75rem; color: var(--gold-light);
-    letter-spacing: 0.08em;
-  }
-
-  .why-photo {
-    border-radius: 16px; overflow: hidden;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-    border: 1px solid rgba(201,168,76,0.15);
-    aspect-ratio: 4/3;
-  }
-  .why-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.9) saturate(0.85); }
-
-  /* ── GALLERY ── */
-  .gallery {
-    padding: 100px 80px;
-    background: var(--navy);
-  }
-  .gallery-header { text-align: center; margin-bottom: 52px; }
-  .gallery-header .section-title { color: #fff; }
-  .gallery-header p { color: rgba(255,255,255,0.45); font-size: 0.95rem; margin-top: 12px; }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 16px;
-  }
-  .gallery-item {
-    border-radius: 12px; overflow: hidden;
-    position: relative; cursor: pointer;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    filter: brightness(0.88) saturate(0.85);
-    transition: filter 0.4s, transform 0.4s;
-  }
-  .gallery-item:hover img { filter: brightness(1) saturate(1); transform: scale(1.03); }
-  .gallery-item-1 { grid-row: 1 / 3; aspect-ratio: 3/4; }
-  .gallery-item-2 { aspect-ratio: 4/3; }
-  .gallery-item-3 { aspect-ratio: 4/3; }
-  .gallery-item-4 { aspect-ratio: 4/3; }
-  .gallery-item-5 { aspect-ratio: 4/3; }
-  .gallery-caption {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(13,31,60,0.75) 0%, transparent 50%);
-    display: flex; align-items: flex-end; padding: 18px;
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .gallery-item:hover .gallery-caption { opacity: 1; }
-  .gallery-caption span {
-    font-size: 0.8rem; color: var(--gold-light);
-    letter-spacing: 0.08em; text-transform: uppercase;
-  }
-
-  .contact-storefront {
-    border-radius: 12px; overflow: hidden;
-    margin-bottom: 32px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    border: 1px solid rgba(201,168,76,0.15);
-    aspect-ratio: 16/9;
-  }
-  .contact-storefront img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) saturate(0.85); }
-
-  .charm-photo {
-    border-radius: 10px; overflow: hidden;
-    width: 120px; flex-shrink: 0;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    border: 1px solid rgba(201,168,76,0.2);
-  }
-  .charm-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  @media (max-width: 900px) {
-    .gallery { padding: 60px 24px; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-    .gallery-item-1 { grid-row: auto; aspect-ratio: 4/3; }
-  }
-
-  /* ── PRIVACY MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(8,15,30,0.85);
-    backdrop-filter: blur(6px);
-    align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-box {
-    background: var(--warm-white);
-    border-radius: 16px;
-    max-width: 720px; width: 100%;
-    max-height: 88vh;
-    display: flex; flex-direction: column;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-    animation: modal-in 0.25s ease;
-  }
-  @keyframes modal-in {
-    from { opacity: 0; transform: translateY(20px) scale(0.98); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .modal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 28px 36px 20px;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    flex-shrink: 0;
-  }
-  .modal-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; color: var(--navy);
-  }
-  .modal-close {
-    background: rgba(0,0,0,0.06); border: none; cursor: pointer;
-    width: 36px; height: 36px; border-radius: 50%;
-    font-size: 1.1rem; color: var(--text-mid);
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s; flex-shrink: 0;
-  }
-  .modal-close:hover { background: rgba(0,0,0,0.12); }
-  .modal-body {
-    overflow-y: auto; padding: 28px 36px 36px;
-    scroll-behavior: smooth;
-  }
-  .modal-body .updated { color: var(--text-light); font-size: 0.82rem; margin-bottom: 28px; }
-  .modal-body h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem; color: var(--navy);
-    margin: 28px 0 10px;
-  }
-  .modal-body h3:first-of-type { margin-top: 0; }
-  .modal-body p { color: var(--text-mid); font-size: 0.93rem; line-height: 1.8; margin-bottom: 12px; }
-  .modal-body ul { color: var(--text-mid); font-size: 0.93rem; line-height: 1.8; padding-left: 20px; margin-bottom: 12px; }
-  .modal-body a { color: var(--gold); }
-  @media (max-width: 600px) {
-    .modal-header { padding: 20px 20px 16px; }
-    .modal-body { padding: 20px 20px 28px; }
+    .reviews-track { padding: 6px 20px; }
+    .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
   }
 </style>
 </head>
@@ -702,67 +296,64 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    Maria Auto & Traffic School
-    <span>Dade County, Florida</span>
-  </div>
+  <div class="nav-logo">Maria Auto & Traffic School<span>Dade County, Florida</span></div>
   <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">How It Works</a></li>
-    <li><a href="#reviews">Reviews</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#process" data-i18n="nav.process">How It Works</a></li>
+    <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Get Started</a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn" id="lang-btn">🌐 <span id="lang-btn-label">EN</span></button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-option" data-lang="en">English</button>
+        <button class="lang-option" data-lang="es">Español</button>
+      </div>
+    </div>
+    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get Started</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#services" class="mobile-link">Services</a>
-  <a href="#process" class="mobile-link">How It Works</a>
-  <a href="#reviews" class="mobile-link">Reviews</a>
-  <a href="#contact" class="mobile-link">Contact</a>
-  <a href="#contact" class="mobile-cta mobile-link">Book Your Session</a>
+  <a href="#services" class="mobile-link" data-i18n="nav.services">Services</a>
+  <a href="#process" class="mobile-link" data-i18n="nav.process">How It Works</a>
+  <a href="#reviews" class="mobile-link" data-i18n="nav.reviews">Reviews</a>
+  <a href="#contact" class="mobile-link" data-i18n="nav.contact">Contact</a>
+  <div class="mobile-lang">
+    <button data-lang="en">English</button>
+    <button data-lang="es">Español</button>
+  </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-texture"></div>
-  <div class="hero-grid-overlay"></div>
   <div class="hero-left">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      <span>Dade County's Most Trusted Driving School</span>
-    </div>
-    <h1 class="hero-headline">
-      Drive With
-      <em>Confidence.</em>
-    </h1>
-    <p class="hero-sub">Your license. Your freedom. Your future.</p>
-    <p class="hero-body">
-      Maria Auto & Traffic School has guided hundreds of students from first-time nerves to full confidence behind the wheel. We make the process simple, warm, and welcoming — whether you need the written test, the practical exam, or one-on-one driving lessons.
-    </p>
+    <div class="hero-badge"><span class="hero-badge-dot"></span><span data-i18n="hero.badge">Dade County's Trusted Driving School</span></div>
+    <h1 class="hero-headline" data-i18n-html="hero.headline">Drive With<em>Confidence.</em></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Your license. Your freedom. Your future.</p>
+    <p class="hero-body" data-i18n="hero.body">Maria Auto & Traffic School has guided hundreds of students from first-time nerves to full confidence behind the wheel. We make the process simple and welcoming — written test, road exam, or driving lessons.</p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Book Your Session</a>
-      <a href="#services" class="btn-secondary">Explore Services</a>
+      <a href="#contact" class="btn-primary" data-i18n="hero.cta1">Book Your Session</a>
+      <a href="#services" class="btn-secondary" data-i18n="hero.cta2">Explore Services</a>
     </div>
   </div>
   <div class="hero-right">
-    <div style="display:flex;flex-direction:column;gap:16px;width:360px">
-      <div class="hero-photo" style="aspect-ratio:4/3">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo">
         <img src="images/maria3.jpg" alt="Students celebrating passing their driving test outside Maria Auto & Traffic School">
-        <div class="hero-photo-badge">★ Real students. Real results.</div>
+        <div class="hero-photo-badge" data-i18n="hero.photoBadge">Real students. Real results.</div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="hero-stat-card" style="padding:20px 24px">
-          <div class="stat-number" style="font-size:2.2rem">5.0</div>
-          <div class="stat-label">Google Rating</div>
+      <div class="hero-stats-row">
+        <div class="hero-stat-card">
+          <div class="stat-number">4.6★</div>
+          <div class="stat-label" data-i18n="hero.statRating">Google Rating</div>
         </div>
-        <div class="hero-stat-card" style="padding:20px 24px">
-          <div class="stat-number" style="font-size:2.2rem">100%</div>
-          <div class="stat-label">Recommend Us</div>
+        <div class="hero-stat-card">
+          <div class="stat-number">50+</div>
+          <div class="stat-label" data-i18n="hero.statReviews">Google Reviews</div>
         </div>
       </div>
     </div>
@@ -773,43 +364,41 @@
 <section class="services" id="services">
   <div class="services-header">
     <div>
-      <p class="section-label">What We Offer</p>
-      <h2 class="section-title">Everything You Need<br>to Get Licensed</h2>
+      <p class="section-label" data-i18n="services.label">What We Offer</p>
+      <h2 class="section-title" data-i18n-html="services.title">Everything You Need<br>to Get Licensed</h2>
     </div>
-    <p class="services-desc">
-      From your very first step — the written knowledge test — all the way through your practical road exam, our team is here to guide you with patience, care, and expertise. We serve students in English and Spanish.
-    </p>
+    <p class="services-desc" data-i18n="services.desc">From your first written test to your practical road exam, our team guides you with patience and expertise — in English and Spanish.</p>
   </div>
   <div class="services-grid">
     <div class="service-card fade-up">
       <div class="service-icon">📝</div>
-      <h3 class="service-name">Written Knowledge Test</h3>
-      <p class="service-desc">No appointment needed. We screen an educational video to prepare you, then you take the computerized test that gives you live feedback as you go — stress-free from start to finish.</p>
+      <h3 class="service-name" data-i18n="services.s1title">Written Knowledge Test</h3>
+      <p class="service-desc" data-i18n="services.s1desc">No appointment needed. We screen a prep video, then you take the computerized test with live feedback — stress-free.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🚗</div>
-      <h3 class="service-name">Practical Driving Exam</h3>
-      <p class="service-desc">Take your behind-the-wheel road test with our experienced, calm instructors. Maria and her team explain every step clearly and precisely — giving you the confidence to pass.</p>
+      <h3 class="service-name" data-i18n="services.s2title">Practical Driving Exam</h3>
+      <p class="service-desc" data-i18n="services.s2desc">Take your road test with experienced, calm instructors who explain every step clearly.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🎓</div>
-      <h3 class="service-name">Driving Lessons</h3>
-      <p class="service-desc">Scared of the wheel? We specialize in building confidence from zero. Our instructors have guided students through every fear, from highway merging to parallel parking.</p>
+      <h3 class="service-name" data-i18n="services.s3title">Driving Lessons</h3>
+      <p class="service-desc" data-i18n="services.s3desc">Nervous behind the wheel? We build confidence from zero — highway merging, parking, and more.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🍺</div>
-      <h3 class="service-name">Alcohol & Drug Course</h3>
-      <p class="service-desc">State-required traffic law and substance awareness courses completed efficiently and professionally at our school — all in one convenient location.</p>
+      <h3 class="service-name" data-i18n="services.s4title">Alcohol & Drug Course</h3>
+      <p class="service-desc" data-i18n="services.s4desc">State-required traffic law and substance awareness courses completed efficiently at our school.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">📋</div>
-      <h3 class="service-name">Theory Exam Prep</h3>
-      <p class="service-desc">Our staff breaks down traffic laws and exam questions in a way that truly sticks. Students leave understanding — not just memorizing — the rules of the road.</p>
+      <h3 class="service-name" data-i18n="services.s5title">Theory Exam Prep</h3>
+      <p class="service-desc" data-i18n="services.s5desc">We break down traffic laws and exam questions in a way that truly sticks with you.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🌐</div>
-      <h3 class="service-name">Bilingual Service</h3>
-      <p class="service-desc">We proudly serve the diverse Dade County community in both English and Spanish, making the licensing process accessible and welcoming to everyone.</p>
+      <h3 class="service-name" data-i18n="services.s6title">Bilingual Service</h3>
+      <p class="service-desc" data-i18n="services.s6desc">We proudly serve the Dade County community in both English and Spanish.</p>
     </div>
   </div>
 </section>
@@ -817,94 +406,36 @@
 <!-- WHY US -->
 <section class="why" id="why">
   <div class="why-left">
-    <p class="section-label" style="color:var(--gold)">Why Maria's School</p>
-    <h2 class="section-title" style="color:#fff">Family-Run. Community-Trusted.<br>Results-Proven.</h2>
-    <p class="why-body">
-      When you walk through our doors, you're not a number — you're family. The Dade County community has trusted us for years because we combine professional expertise with a warmth that makes all the difference.
-    </p>
+    <p class="section-label" style="color:var(--gold)" data-i18n="why.label">Why Maria's School</p>
+    <h2 class="section-title" style="color:#fff" data-i18n-html="why.title">Family-Run.<br>Community-Trusted.</h2>
+    <p class="why-body" data-i18n="why.body">When you walk through our doors, you're not a number — you're family. The Dade County community has trusted us for years.</p>
     <div class="why-features">
       <div class="why-feature">
         <div class="why-feature-icon">🏆</div>
-        <div class="why-feature-text">
-          <h4>Best in Dade County</h4>
-          <p>Recognized by our students as the #1 driving school in Miami-Dade. That's not marketing — that's from real reviews.</p>
-        </div>
+        <div class="why-feature-text"><h4 data-i18n="why.f1title">Trusted in Dade County</h4><p data-i18n="why.f1desc">Rated 4.6 stars from 50+ real student reviews.</p></div>
       </div>
       <div class="why-feature">
         <div class="why-feature-icon">🤝</div>
-        <div class="why-feature-text">
-          <h4>Warm, Patient Instructors</h4>
-          <p>Maria and her team are known for their kindness and the genuine confidence they instill in every student.</p>
-        </div>
+        <div class="why-feature-text"><h4 data-i18n="why.f2title">Warm, Patient Instructors</h4><p data-i18n="why.f2desc">Maria and her team are known for their kindness and the confidence they instill.</p></div>
       </div>
       <div class="why-feature">
         <div class="why-feature-icon">⚡</div>
-        <div class="why-feature-text">
-          <h4>Walk-In Friendly</h4>
-          <p>No appointment needed for the written test. We respect your time and make the process as smooth as possible.</p>
-        </div>
-      </div>
-      <div class="why-feature">
-        <div class="why-feature-icon">🌎</div>
-        <div class="why-feature-text">
-          <h4>New to the U.S.? Welcome.</h4>
-          <p>We proudly guide newcomers through every step of the American licensing process with compassion and clarity.</p>
-        </div>
+        <div class="why-feature-text"><h4 data-i18n="why.f3title">Walk-In Friendly</h4><p data-i18n="why.f3desc">No appointment needed for the written test.</p></div>
       </div>
     </div>
   </div>
   <div class="why-right">
-    <div class="why-photo">
-      <img src="images/maria1.jpg" alt="Happy students waiting inside Maria Auto & Traffic School">
-    </div>
-    <div class="why-mini-stats" style="margin-top:20px">
-      <div class="why-mini">
-        <div class="why-mini-num">★ 5.0</div>
-        <div class="why-mini-label">Google Rating</div>
-      </div>
-      <div class="why-mini">
-        <div class="why-mini-num">100%</div>
-        <div class="why-mini-label">Would Recommend</div>
-      </div>
-      <div class="why-mini">
-        <div class="why-mini-num">Walk-In</div>
-        <div class="why-mini-label">No Appointment Needed</div>
-      </div>
-      <div class="why-mini">
-        <div class="why-mini-num">En & Es</div>
-        <div class="why-mini-label">Bilingual Service</div>
+    <div class="why-photo-grid">
+      <div class="why-photo-main"><img src="images/maria1.jpg" alt="Happy students waiting inside Maria Auto & Traffic School"></div>
+      <div class="why-photo-side">
+        <div class="why-photo-small"><img src="images/maria4.jpg" alt="Student holding Aprobé sign"></div>
+        <div class="why-photo-small"><img src="images/maria2.jpg" alt="Students with passing certificate"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery">
-  <div class="gallery-header">
-    <p class="section-label">Our Students</p>
-    <h2 class="section-title">Every Pass Is a Celebration</h2>
-    <p>Join the hundreds of Dade County residents who've earned their license with us.</p>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-item gallery-item-1">
-      <img src="images/maria3.jpg" alt="Students holding PASSED signs outside Maria Auto & Traffic School">
-      <div class="gallery-caption"><span>Passed! Outside the school</span></div>
-    </div>
-    <div class="gallery-item gallery-item-2">
-      <img src="images/maria4.jpg" alt="Student holding Aprobé sign inside the school">
-      <div class="gallery-caption"><span>¡Aprobé! — I passed!</span></div>
-    </div>
-    <div class="gallery-item gallery-item-3">
-      <img src="images/maria2.jpg" alt="Students celebrating with their passing certificate">
-      <div class="gallery-caption"><span>Certificate in hand</span></div>
-    </div>
-    <div class="gallery-item gallery-item-4">
-      <img src="images/maria5.jpg" alt="Students outside the Maria Auto & Traffic School storefront">
-      <div class="gallery-caption"><span>Outside our school</span></div>
-    </div>
-    <div class="gallery-item gallery-item-5">
-      <img src="images/maria1.jpg" alt="Happy students in the waiting room">
-      <div class="gallery-caption"><span>A welcoming space</span></div>
+    <div class="why-mini-stats">
+      <div class="why-mini"><div class="why-mini-num">4.6★</div><div class="why-mini-label" data-i18n="why.mRating">Rating</div></div>
+      <div class="why-mini"><div class="why-mini-num">50+</div><div class="why-mini-label" data-i18n="why.mReviews">Reviews</div></div>
+      <div class="why-mini"><div class="why-mini-num">En/Es</div><div class="why-mini-label" data-i18n="why.mLang">Bilingual</div></div>
     </div>
   </div>
 </section>
@@ -912,285 +443,107 @@
 <!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="reviews-header">
-    <p class="section-label">Real Students, Real Results</p>
-    <h2 class="section-title">What Our Community Says</h2>
-    <p class="reviews-sub">From first-time drivers to newcomers finding their way — here's what our students share about their experience.</p>
+    <p class="section-label" data-i18n="reviews.label">Real Students, Real Results</p>
+    <h2 class="section-title" data-i18n="reviews.title">What Our Community Says</h2>
+    <p class="reviews-sub" data-i18n="reviews.sub">From first-time drivers to newcomers finding their way in a new country.</p>
+    <div class="reviews-rating-badge">
+      <span class="stars">★★★★★</span>
+      <span class="num">4.6</span>
+      <span class="count">· 50+ <span data-i18n="reviews.googleReviews">Google Reviews</span></span>
+    </div>
   </div>
   <div class="reviews-track-wrap">
     <div class="reviews-track">
-      <!-- First set -->
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Maria Auto and Traffic School is the BEST driving school in Dade County. I 100% recommend this school.</p>
-        <div class="review-author">Rene & Dopey Garmas</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Excellent experience! I felt very comfortable with Maria. She explains things perfectly and gives instructions clearly, precisely, and calmly.</p>
-        <div class="review-author">Mido Vnc</div>
-        <div class="review-time">6 months ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Super easy process. They show you an educational video first to prepare you, and you take the test on the computer that tells you how you're doing as you go.</p>
-        <div class="review-author">Kaiti Tarajano</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">The family owners are very kind, welcoming, and knowledgeable. I highly recommend it.</p>
-        <div class="review-author">Noah Cameron</div>
-        <div class="review-time">5 months ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">I just passed my practical exam with them and I am totally delighted. María is very charming with her clients and the teacher is very kind and polite. 100% recommend.</p>
-        <div class="review-author">Jose Ramos</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">I love this school. They transmit a peace that touches your heart ❤️ and they are very professional. Blessings, Maria.</p>
-        <div class="review-author">Legna Arbos</div>
-        <div class="review-time">a year ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">They were instrumental in my driving lessons, giving me the confidence and encouragement I needed to overcome my fear of driving.</p>
-        <div class="review-author">Yasmany Salgado</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Reasonable price. They made the process super quick and treated me very well — much appreciated when you're from out of town and don't quite understand all the procedures.</p>
-        <div class="review-author">Leire Viana</div>
-        <div class="review-time">6 months ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Excellent teacher. She gives you confidence and motivation; you acquire all the knowledge you need. Always grateful.</p>
-        <div class="review-author">Vilma Blanco</div>
-        <div class="review-time">a year ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Very satisfied with the school. A great place to learn and take exams, very good teachers and excellent staff. I recommend it 1000%!</p>
-        <div class="review-author">Larisa Montero</div>
-        <div class="review-time">Local Guide · a year ago</div>
-      </div>
-      <!-- Duplicate for seamless loop -->
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Maria Auto and Traffic School is the BEST driving school in Dade County. I 100% recommend this school.</p>
-        <div class="review-author">Rene & Dopey Garmas</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Excellent experience! I felt very comfortable with Maria. She explains things perfectly and gives instructions clearly, precisely, and calmly.</p>
-        <div class="review-author">Mido Vnc</div>
-        <div class="review-time">6 months ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Super easy process. They show you an educational video first to prepare you, and you take the test on the computer that tells you how you're doing as you go.</p>
-        <div class="review-author">Kaiti Tarajano</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">The family owners are very kind, welcoming, and knowledgeable. I highly recommend it.</p>
-        <div class="review-author">Noah Cameron</div>
-        <div class="review-time">5 months ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">I just passed my practical exam and I am totally delighted. María is very charming and the teacher is very kind and polite. 100% recommend.</p>
-        <div class="review-author">Jose Ramos</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">I love this school. They transmit a peace that touches your heart ❤️ and they are very professional.</p>
-        <div class="review-author">Legna Arbos</div>
-        <div class="review-time">a year ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">They gave me the confidence and encouragement I needed to overcome my fear of driving.</p>
-        <div class="review-author">Yasmany Salgado</div>
-        <div class="review-time">Local Guide · 2 years ago</div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <span class="quote-mark">"</span>
-        <p class="review-text">Very satisfied with the school. A great place to learn and take exams. I recommend it 1000%!</p>
-        <div class="review-author">Larisa Montero</div>
-        <div class="review-time">Local Guide · a year ago</div>
-      </div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Maria Auto and Traffic School is the BEST driving school in Dade County. I 100% recommend this school."</p><div class="review-author">Rene & Dopey Garmas</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Excellent experience! I felt very comfortable with Maria. She explains things clearly, precisely, and calmly."</p><div class="review-author">Mido Vnc</div><div class="review-time">6 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Super easy process. They show you an educational video first, then the computer test tells you how you're doing as you go."</p><div class="review-author">Kaiti Tarajano</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"The family owners are very kind, welcoming, and knowledgeable. I highly recommend it."</p><div class="review-author">Noah Cameron</div><div class="review-time">5 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I just passed my practical exam and I am totally delighted. María is very charming and the teacher is kind and polite."</p><div class="review-author">Jose Ramos</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I love this school. They transmit a peace that touches your heart ❤️ and they are very professional."</p><div class="review-author">Legna Arbos</div><div class="review-time">a year ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"They gave me the confidence and encouragement I needed to overcome my fear of driving."</p><div class="review-author">Yasmany Salgado</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Reasonable price and quick process — much appreciated when you're from out of town."</p><div class="review-author">Leire Viana</div><div class="review-time">6 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Excellent teacher. She gives you confidence and motivation. Always grateful."</p><div class="review-author">Vilma Blanco</div><div class="review-time">a year ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Very satisfied with the school. Great teachers and excellent staff. I recommend it 1000%!"</p><div class="review-author">Larisa Montero</div><div class="review-time">Local Guide · a year ago</div></div>
+      <!-- duplicate for seamless loop -->
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Maria Auto and Traffic School is the BEST driving school in Dade County. I 100% recommend this school."</p><div class="review-author">Rene & Dopey Garmas</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Excellent experience! I felt very comfortable with Maria. She explains things clearly, precisely, and calmly."</p><div class="review-author">Mido Vnc</div><div class="review-time">6 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Super easy process. They show you an educational video first, then the computer test tells you how you're doing as you go."</p><div class="review-author">Kaiti Tarajano</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"The family owners are very kind, welcoming, and knowledgeable. I highly recommend it."</p><div class="review-author">Noah Cameron</div><div class="review-time">5 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I just passed my practical exam and I am totally delighted. María is very charming and the teacher is kind and polite."</p><div class="review-author">Jose Ramos</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"I love this school. They transmit a peace that touches your heart ❤️ and they are very professional."</p><div class="review-author">Legna Arbos</div><div class="review-time">a year ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"They gave me the confidence and encouragement I needed to overcome my fear of driving."</p><div class="review-author">Yasmany Salgado</div><div class="review-time">Local Guide · 2 years ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Reasonable price and quick process — much appreciated when you're from out of town."</p><div class="review-author">Leire Viana</div><div class="review-time">6 months ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Excellent teacher. She gives you confidence and motivation. Always grateful."</p><div class="review-author">Vilma Blanco</div><div class="review-time">a year ago</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Very satisfied with the school. Great teachers and excellent staff. I recommend it 1000%!"</p><div class="review-author">Larisa Montero</div><div class="review-time">Local Guide · a year ago</div></div>
     </div>
   </div>
   <div style="text-align:center">
-    <div class="google-badge">
-      <span class="g-logo">G</span>
-      <span>All reviews verified on Google Maps</span>
-    </div>
+    <div class="google-badge"><span class="g-logo">G</span><span data-i18n="reviews.verified">All reviews verified on Google Maps</span></div>
   </div>
 </section>
 
 <!-- PROCESS -->
 <section class="process" id="process">
   <div class="process-header">
-    <p class="section-label">How It Works</p>
-    <h2 class="section-title" style="margin-bottom:12px">Your Path to a License<br>is Simpler Than You Think</h2>
-    <p style="color:var(--text-mid);font-size:1rem;max-width:480px;margin:0 auto;line-height:1.7">Four steps. No stress. Just you and your new license.</p>
+    <p class="section-label" data-i18n="process.label">How It Works</p>
+    <h2 class="section-title" data-i18n="process.title">Your Path to a License</h2>
+    <p data-i18n="process.sub">Four steps. No stress. Just you and your new license.</p>
   </div>
   <div class="process-steps">
-    <div class="process-step fade-up">
-      <div class="step-num">1</div>
-      <h4 class="step-title">Walk In or Call</h4>
-      <p class="step-desc">No appointment needed for the written test. Just show up — we'll take it from there.</p>
-    </div>
-    <div class="process-step fade-up">
-      <div class="step-num">2</div>
-      <h4 class="step-title">Watch & Learn</h4>
-      <p class="step-desc">We screen a prep video so you understand what's on the test before you ever sit down.</p>
-    </div>
-    <div class="process-step fade-up">
-      <div class="step-num">3</div>
-      <h4 class="step-title">Test & Practice</h4>
-      <p class="step-desc">Take the written or practical exam with live, supportive guidance from our instructors.</p>
-    </div>
-    <div class="process-step fade-up">
-      <div class="step-num">4</div>
-      <h4 class="step-title">Drive Free</h4>
-      <p class="step-desc">Pass your exams and hit the road with a license and the confidence to match.</p>
-    </div>
+    <div class="process-step fade-up"><div class="step-num">1</div><h4 class="step-title" data-i18n="process.p1title">Walk In or Call</h4><p class="step-desc" data-i18n="process.p1desc">No appointment needed for the written test.</p></div>
+    <div class="process-step fade-up"><div class="step-num">2</div><h4 class="step-title" data-i18n="process.p2title">Watch & Learn</h4><p class="step-desc" data-i18n="process.p2desc">We screen a prep video before your test.</p></div>
+    <div class="process-step fade-up"><div class="step-num">3</div><h4 class="step-title" data-i18n="process.p3title">Test & Practice</h4><p class="step-desc" data-i18n="process.p3desc">Take your exam with supportive guidance.</p></div>
+    <div class="process-step fade-up"><div class="step-num">4</div><h4 class="step-title" data-i18n="process.p4title">Drive Free</h4><p class="step-desc" data-i18n="process.p4desc">Pass and hit the road with confidence.</p></div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-left" style="position:relative;z-index:1">
-    <p class="section-label" style="color:var(--gold)">Get In Touch</p>
-    <h2 class="section-title">Ready to Start<br>Your Journey?</h2>
-    <p class="contact-body">
-      Whether you're booking your first lesson or scheduling your road test, we're here for you. Reach out and our friendly team will guide you through every next step.
-    </p>
-    <div class="contact-storefront">
-      <img src="images/maria5.jpg" alt="Maria Auto & Traffic School storefront at 281 NW 82nd Ave Miami">
-    </div>
+    <p class="section-label" style="color:var(--gold)" data-i18n="contact.label">Get In Touch</p>
+    <h2 class="section-title" data-i18n="contact.title">Ready to Start Your Journey?</h2>
+    <p class="contact-body" data-i18n="contact.body">Whether you're booking your first lesson or scheduling your road test, we're here for you.</p>
+    <div class="contact-storefront"><img src="images/maria5.jpg" alt="Maria Auto & Traffic School storefront at 281 NW 82nd Ave Miami"></div>
     <div class="contact-info">
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-item-label">Address</div>
-          <div class="contact-item-text">
-            <a href="https://maps.google.com/?q=281+NW+82nd+Ave,+Miami,+FL+33126" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);">
-              281 NW 82nd Ave<br>Miami, FL 33126
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <div>
-          <div class="contact-item-label">Phone</div>
-          <div class="contact-item-text">
-            <a href="tel:+13052168166" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);">
-              +1 (305) 216-8166
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">🕐</div>
-        <div>
-          <div class="contact-item-label">Hours</div>
-          <div class="contact-item-text" style="font-size:0.88rem;line-height:1.9">
-            Mon – Fri &nbsp;&nbsp;8:00 am – 3:00 pm<br>
-            Saturday &nbsp;&nbsp;&nbsp;8:00 am – 1:00 pm<br>
-            Sunday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closed
-          </div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">🌐</div>
-        <div>
-          <div class="contact-item-label">Languages</div>
-          <div class="contact-item-text">English & Español</div>
-        </div>
-      </div>
+      <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label" data-i18n="contact.address">Address</div><div class="contact-item-text"><a href="https://maps.google.com/?q=281+NW+82nd+Ave,+Miami,+FL+33126" target="_blank" rel="noopener">281 NW 82nd Ave, Miami, FL 33126</a></div></div></div>
+      <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label" data-i18n="contact.phone">Phone</div><div class="contact-item-text"><a href="tel:+13052168166">+1 (305) 216-8166</a></div></div></div>
+      <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-item-label" data-i18n="contact.hours">Hours</div><div class="contact-item-text" data-i18n-html="contact.hoursValue">Mon–Fri 8am–3pm · Sat 8am–1pm · Sun Closed</div></div></div>
+      <div class="contact-item"><div class="contact-icon">🌐</div><div><div class="contact-item-label" data-i18n="contact.languages">Languages</div><div class="contact-item-text">English & Español</div></div></div>
     </div>
   </div>
   <div class="contact-form" style="position:relative;z-index:1">
-    <h3>Book Your Session</h3>
+    <h3 data-i18n="form.title">Book Your Session</h3>
     <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="booking-form">
       <input type="hidden" name="form-name" value="booking">
-      <p style="display:none">
-        <label>Don't fill this out if you're human: <input name="bot-field"></label>
-      </p>
+      <p style="display:none"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
       <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" name="first_name" placeholder="Maria" required>
-        </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" name="last_name" placeholder="Garcia" required>
-        </div>
+        <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" required></div>
+        <div class="form-group"><label data-i18n="form.last">Last Name</label><input type="text" name="last_name" placeholder="Garcia" required></div>
       </div>
+      <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" placeholder="(305) 000-0000" required></div>
       <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" name="phone" placeholder="(305) 000-0000" required>
-      </div>
-      <div class="form-group">
-        <label>Service Interested In</label>
+        <label data-i18n="form.service">Service Interested In</label>
         <select name="service" required>
-          <option value="" disabled selected>Select a service…</option>
-          <option>Written Knowledge Test</option>
-          <option>Practical Driving Exam</option>
-          <option>Driving Lessons</option>
-          <option>Alcohol & Drug Course</option>
-          <option>Theory Exam Prep</option>
+          <option value="" disabled selected data-i18n="form.serviceSelect">Select a service…</option>
+          <option data-i18n="form.opt1">Written Knowledge Test</option>
+          <option data-i18n="form.opt2">Practical Driving Exam</option>
+          <option data-i18n="form.opt3">Driving Lessons</option>
+          <option data-i18n="form.opt4">Alcohol & Drug Course</option>
+          <option data-i18n="form.opt5">Theory Exam Prep</option>
         </select>
       </div>
       <div class="form-group">
-        <label>Preferred Language</label>
-        <select name="language">
-          <option>English</option>
-          <option>Español</option>
-        </select>
+        <label data-i18n="form.lang">Preferred Language</label>
+        <select name="language"><option>English</option><option>Español</option></select>
       </div>
-      <div class="form-group">
-        <label>Questions or Notes</label>
-        <textarea name="notes" placeholder="Tell us a little about where you are in the process…"></textarea>
-      </div>
-      <div data-netlify-recaptcha="true" style="margin-bottom:16px"></div>
-      <button type="submit" class="btn-submit" id="submit-btn">Book Your Session</button>
+      <div class="form-group"><label data-i18n="form.notes">Questions or Notes</label><textarea name="notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Tell us a little about where you are in the process…"></textarea></div>
+      <div data-netlify-recaptcha="true" style="margin-bottom:14px"></div>
+      <button type="submit" class="btn-submit" id="submit-btn" data-i18n="form.submit">Book Your Session</button>
     </form>
     <div class="form-success" id="form-success">
       <div class="form-success-icon">✓</div>
-      <h4>We received your request!</h4>
-      <p>Maria or a team member will be in touch with you shortly.<br>We look forward to helping you get your license.</p>
+      <h4 data-i18n="form.successTitle">We received your request!</h4>
+      <p data-i18n="form.successBody">Maria or a team member will be in touch with you shortly.</p>
     </div>
   </div>
 </section>
@@ -1200,179 +553,264 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <h3>Maria Auto & Traffic School</h3>
-      <p>Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.</p>
-      <p style="margin-top:16px;font-size:0.85rem;color:rgba(255,255,255,0.35);line-height:1.8">
+      <p data-i18n="footer.tagline">Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.</p>
+      <div class="footer-contact-mini">
         📍 281 NW 82nd Ave, Miami, FL 33126<br>
-        📞 <a href="tel:+13052168166" style="color:rgba(255,255,255,0.4);text-decoration:none">(305) 216-8166</a><br>
-        🕐 Mon–Fri 8am–3pm · Sat 8am–1pm · Sun Closed
-      </p>
-      <div class="charm-photo" style="margin-top:20px">
-        <img src="images/maria6.jpg" alt="Maria Auto School Florida keepsake">
+        📞 <a href="tel:+13052168166">(305) 216-8166</a><br>
+        🕐 <span data-i18n-html="contact.hoursValue">Mon–Fri 8am–3pm · Sat 8am–1pm · Sun Closed</span>
       </div>
     </div>
     <div class="footer-col">
-      <h4>Services</h4>
+      <h4 data-i18n="footer.servicesHeader">Services</h4>
       <ul>
-        <li><a href="#services">Written Test</a></li>
-        <li><a href="#services">Road Exam</a></li>
-        <li><a href="#services">Driving Lessons</a></li>
-        <li><a href="#services">Alcohol & Drug Course</a></li>
+        <li><a href="#services" data-i18n="services.s1title">Written Test</a></li>
+        <li><a href="#services" data-i18n="services.s2title">Road Exam</a></li>
+        <li><a href="#services" data-i18n="services.s3title">Driving Lessons</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Info</h4>
+      <h4 data-i18n="footer.infoHeader">Info</h4>
       <ul>
-        <li><a href="#why">Why Choose Us</a></li>
-        <li><a href="#process">How It Works</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#why" data-i18n="footer.why">Why Choose Us</a></li>
+        <li><a href="#process" data-i18n="nav.process">How It Works</a></li>
+        <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© <span id="footer-year">2025</span> Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · <a href="tel:+13052168166" style="color:rgba(255,255,255,0.4);text-decoration:none">(305) 216-8166</a> · <a href="#" id="privacy-link" style="color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Privacy Policy</a></p>
-    <div class="footer-dade">Proudly Serving Dade County</div>
+    <p>© <span id="footer-year">2025</span> Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · <a href="tel:+13052168166">(305) 216-8166</a> · <a href="#" id="privacy-link" data-i18n="footer.privacy">Privacy Policy</a></p>
+    <div class="footer-dade" data-i18n="footer.badge">Proudly Serving Dade County</div>
   </div>
 </footer>
 
-<!-- PRIVACY POLICY MODAL -->
+<!-- PRIVACY MODAL -->
 <div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-label="Privacy Policy">
   <div class="modal-box">
     <div class="modal-header">
-      <h2>Privacy Policy</h2>
+      <h2 data-i18n="privacy.title">Privacy Policy</h2>
       <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
-      <p class="updated">Last updated: January 1, 2025</p>
-      <p>Maria Auto & Traffic School ("we," "us," or "our") operates this website. This Privacy Policy explains how we collect, use, and protect the personal information you provide when you use our site or submit an inquiry through our contact form.</p>
-
-      <h3>1. Information We Collect</h3>
-      <p>When you submit a booking inquiry, we may collect:</p>
-      <ul>
-        <li>First and last name</li>
-        <li>Phone number</li>
-        <li>Service interest (written test, road exam, driving lessons, etc.)</li>
-        <li>Preferred language (English or Spanish)</li>
-        <li>Any notes or questions you voluntarily provide</li>
-      </ul>
-      <p>We do not collect payment information, Social Security numbers, or government-issued identification numbers through this website.</p>
-
-      <h3>2. How We Use Your Information</h3>
-      <p>We use the information you provide solely to respond to your inquiry, contact you to schedule your session, and provide the driving education services you requested. We do not sell, rent, or share your personal information with any third parties for marketing purposes.</p>
-
-      <h3>3. How We Store Your Information</h3>
-      <p>Form submissions are processed and stored securely through Netlify Forms. You can review Netlify's privacy practices at <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">netlify.com/privacy</a>. We access submitted information only through our password-protected dashboard and delete submissions periodically once inquiries are resolved.</p>
-
-      <h3>4. Cookies & Tracking</h3>
-      <p>This website does not use cookies, analytics tracking, or advertising technology. No tracking data is collected about your browsing behavior on our site.</p>
-
-      <h3>5. Your Rights (Florida Residents)</h3>
-      <p>You have the right to know what personal information we hold about you, to request its correction or deletion, and to opt out of future communications. To exercise these rights, please contact us directly.</p>
-
-      <h3>6. Children's Privacy</h3>
-      <p>Our website is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has submitted information through our site, please contact us so we can remove it promptly.</p>
-
-      <h3>7. Changes to This Policy</h3>
-      <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of our website after any changes constitutes acceptance of the updated policy.</p>
-
-      <h3>8. Contact Us</h3>
-      <p>If you have questions about this Privacy Policy, please contact us:</p>
-      <ul>
-        <li><strong>Maria Auto & Traffic School</strong></li>
-        <li>281 NW 82nd Ave, Miami, FL 33126</li>
-        <li>Phone: <a href="tel:+13052168166">(305) 216-8166</a></li>
-      </ul>
+      <p class="updated" data-i18n="privacy.updated">Last updated: January 1, 2025</p>
+      <p data-i18n="privacy.intro">Maria Auto & Traffic School ("we," "us," or "our") operates this website. This Privacy Policy explains how we collect, use, and protect the personal information you provide when you use our site or submit an inquiry through our contact form.</p>
+      <h3 data-i18n="privacy.h1">1. Information We Collect</h3>
+      <p data-i18n="privacy.p1">When you submit a booking inquiry, we may collect your name, phone number, service interest, preferred language, and any notes you provide. We do not collect payment information, Social Security numbers, or government ID numbers.</p>
+      <h3 data-i18n="privacy.h2">2. How We Use Your Information</h3>
+      <p data-i18n="privacy.p2">We use your information solely to respond to your inquiry, contact you to schedule your session, and provide the services you requested. We never sell or share your information for marketing purposes.</p>
+      <h3 data-i18n="privacy.h3">3. How We Store Your Information</h3>
+      <p data-i18n-html="privacy.p3">Form submissions are processed securely through Netlify Forms. Review Netlify's practices at <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">netlify.com/privacy</a>. We delete submissions periodically once resolved.</p>
+      <h3 data-i18n="privacy.h4">4. Cookies & Tracking</h3>
+      <p data-i18n="privacy.p4">This site uses no cookies, analytics, or advertising technology. No browsing data is tracked.</p>
+      <h3 data-i18n="privacy.h5">5. Your Rights</h3>
+      <p data-i18n="privacy.p5">You may request to know, correct, or delete the information we hold about you, or opt out of future communications, by contacting us directly.</p>
+      <h3 data-i18n="privacy.h6">6. Contact Us</h3>
+      <p data-i18n-html="privacy.p6">Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Phone: <a href="tel:+13052168166">(305) 216-8166</a></p>
     </div>
   </div>
 </div>
 
 <script>
-  // Auto-update copyright year
-  document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-  // Privacy modal
-  const privacyModal = document.getElementById('privacy-modal');
-  document.getElementById('privacy-link').addEventListener('click', (e) => {
-    e.preventDefault();
-    privacyModal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-  document.getElementById('modal-close').addEventListener('click', () => {
-    privacyModal.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-  privacyModal.addEventListener('click', (e) => {
-    if (e.target === privacyModal) {
-      privacyModal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && privacyModal.classList.contains('open')) {
-      privacyModal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Scroll reveal
-  const fadeEls = document.querySelectorAll('.fade-up');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  fadeEls.forEach(el => observer.observe(el));
-
-  // Nav shadow on scroll
-  window.addEventListener('scroll', () => {
-    document.querySelector('nav').style.boxShadow = window.scrollY > 20
-      ? '0 4px 30px rgba(0,0,0,0.4)' : 'none';
-  });
-
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-  });
-  // Close mobile menu when any link is clicked
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    });
-  });
-
-  // Netlify form submission (AJAX — no page reload, shows success panel)
-  const bookingForm = document.getElementById('booking-form');
-  const formSuccess = document.getElementById('form-success');
-  if (bookingForm) {
-    bookingForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-      const formData = new FormData(bookingForm);
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      })
-        .then(() => {
-          bookingForm.style.display = 'none';
-          formSuccess.style.display = 'block';
-        })
-        .catch(() => {
-          btn.textContent = 'Something went wrong — please call us';
-          btn.style.background = 'rgba(232,112,74,0.8)';
-          btn.disabled = false;
-          setTimeout(() => {
-            btn.textContent = 'Book Your Session';
-            btn.style.background = '';
-          }, 5000);
-        });
-    });
+const translations = {
+  en: {
+    "nav.services":"Services","nav.process":"How It Works","nav.reviews":"Reviews","nav.contact":"Contact","nav.cta":"Get Started",
+    "hero.badge":"Dade County's Trusted Driving School",
+    "hero.headline":"Drive With<em>Confidence.</em>",
+    "hero.sub":"Your license. Your freedom. Your future.",
+    "hero.body":"Maria Auto & Traffic School has guided hundreds of students from first-time nerves to full confidence behind the wheel. We make the process simple and welcoming — written test, road exam, or driving lessons.",
+    "hero.cta1":"Book Your Session","hero.cta2":"Explore Services",
+    "hero.photoBadge":"Real students. Real results.",
+    "hero.statRating":"Google Rating","hero.statReviews":"Google Reviews",
+    "services.label":"What We Offer",
+    "services.title":"Everything You Need<br>to Get Licensed",
+    "services.desc":"From your first written test to your practical road exam, our team guides you with patience and expertise — in English and Spanish.",
+    "services.s1title":"Written Knowledge Test","services.s1desc":"No appointment needed. We screen a prep video, then you take the computerized test with live feedback — stress-free.",
+    "services.s2title":"Practical Driving Exam","services.s2desc":"Take your road test with experienced, calm instructors who explain every step clearly.",
+    "services.s3title":"Driving Lessons","services.s3desc":"Nervous behind the wheel? We build confidence from zero — highway merging, parking, and more.",
+    "services.s4title":"Alcohol & Drug Course","services.s4desc":"State-required traffic law and substance awareness courses completed efficiently at our school.",
+    "services.s5title":"Theory Exam Prep","services.s5desc":"We break down traffic laws and exam questions in a way that truly sticks with you.",
+    "services.s6title":"Bilingual Service","services.s6desc":"We proudly serve the Dade County community in both English and Spanish.",
+    "why.label":"Why Maria's School",
+    "why.title":"Family-Run.<br>Community-Trusted.",
+    "why.body":"When you walk through our doors, you're not a number — you're family. The Dade County community has trusted us for years.",
+    "why.f1title":"Trusted in Dade County","why.f1desc":"Rated 4.6 stars from 50+ real student reviews.",
+    "why.f2title":"Warm, Patient Instructors","why.f2desc":"Maria and her team are known for their kindness and the confidence they instill.",
+    "why.f3title":"Walk-In Friendly","why.f3desc":"No appointment needed for the written test.",
+    "why.mRating":"Rating","why.mReviews":"Reviews","why.mLang":"Bilingual",
+    "reviews.label":"Real Students, Real Results","reviews.title":"What Our Community Says",
+    "reviews.sub":"From first-time drivers to newcomers finding their way in a new country.",
+    "reviews.googleReviews":"Google Reviews","reviews.verified":"All reviews verified on Google Maps",
+    "process.label":"How It Works","process.title":"Your Path to a License",
+    "process.sub":"Four steps. No stress. Just you and your new license.",
+    "process.p1title":"Walk In or Call","process.p1desc":"No appointment needed for the written test.",
+    "process.p2title":"Watch & Learn","process.p2desc":"We screen a prep video before your test.",
+    "process.p3title":"Test & Practice","process.p3desc":"Take your exam with supportive guidance.",
+    "process.p4title":"Drive Free","process.p4desc":"Pass and hit the road with confidence.",
+    "contact.label":"Get In Touch","contact.title":"Ready to Start Your Journey?",
+    "contact.body":"Whether you're booking your first lesson or scheduling your road test, we're here for you.",
+    "contact.address":"Address","contact.phone":"Phone","contact.hours":"Hours",
+    "contact.hoursValue":"Mon–Fri 8am–3pm · Sat 8am–1pm · Sun Closed",
+    "contact.languages":"Languages",
+    "form.title":"Book Your Session","form.first":"First Name","form.last":"Last Name","form.phone":"Phone Number",
+    "form.service":"Service Interested In","form.serviceSelect":"Select a service…",
+    "form.opt1":"Written Knowledge Test","form.opt2":"Practical Driving Exam","form.opt3":"Driving Lessons","form.opt4":"Alcohol & Drug Course","form.opt5":"Theory Exam Prep",
+    "form.lang":"Preferred Language","form.notes":"Questions or Notes","form.notesPlaceholder":"Tell us a little about where you are in the process…",
+    "form.submit":"Book Your Session","form.successTitle":"We received your request!","form.successBody":"Maria or a team member will be in touch with you shortly.",
+    "footer.tagline":"Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.",
+    "footer.servicesHeader":"Services","footer.infoHeader":"Info","footer.why":"Why Choose Us","footer.privacy":"Privacy Policy","footer.badge":"Proudly Serving Dade County",
+    "privacy.title":"Privacy Policy","privacy.updated":"Last updated: January 1, 2025",
+    "privacy.intro":"Maria Auto & Traffic School (\"we,\" \"us,\" or \"our\") operates this website. This Privacy Policy explains how we collect, use, and protect the personal information you provide when you use our site or submit an inquiry through our contact form.",
+    "privacy.h1":"1. Information We Collect","privacy.p1":"When you submit a booking inquiry, we may collect your name, phone number, service interest, preferred language, and any notes you provide. We do not collect payment information, Social Security numbers, or government ID numbers.",
+    "privacy.h2":"2. How We Use Your Information","privacy.p2":"We use your information solely to respond to your inquiry, contact you to schedule your session, and provide the services you requested. We never sell or share your information for marketing purposes.",
+    "privacy.h3":"3. How We Store Your Information","privacy.p3":"Form submissions are processed securely through Netlify Forms. Review Netlify's practices at <a href=\"https://www.netlify.com/privacy/\" target=\"_blank\" rel=\"noopener\">netlify.com/privacy</a>. We delete submissions periodically once resolved.",
+    "privacy.h4":"4. Cookies & Tracking","privacy.p4":"This site uses no cookies, analytics, or advertising technology. No browsing data is tracked.",
+    "privacy.h5":"5. Your Rights","privacy.p5":"You may request to know, correct, or delete the information we hold about you, or opt out of future communications, by contacting us directly.",
+    "privacy.h6":"6. Contact Us","privacy.p6":"Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Phone: <a href=\"tel:+13052168166\">(305) 216-8166</a>"
+  },
+  es: {
+    "nav.services":"Servicios","nav.process":"Cómo Funciona","nav.reviews":"Reseñas","nav.contact":"Contacto","nav.cta":"Empezar",
+    "hero.badge":"La Autoescuela de Confianza del Condado de Dade",
+    "hero.headline":"Maneja Con<em>Confianza.</em>",
+    "hero.sub":"Tu licencia. Tu libertad. Tu futuro.",
+    "hero.body":"Maria Auto & Traffic School ha guiado a cientos de estudiantes desde el nerviosismo inicial hasta la plena confianza al volante. Hacemos el proceso simple y acogedor — examen escrito, examen práctico o clases de manejo.",
+    "hero.cta1":"Reserva Tu Cita","hero.cta2":"Ver Servicios",
+    "hero.photoBadge":"Estudiantes reales. Resultados reales.",
+    "hero.statRating":"Calificación en Google","hero.statReviews":"Reseñas en Google",
+    "services.label":"Lo Que Ofrecemos",
+    "services.title":"Todo Lo Que Necesitas<br>Para Obtener Tu Licencia",
+    "services.desc":"Desde tu primer examen escrito hasta tu examen práctico de manejo, nuestro equipo te guía con paciencia y experiencia — en inglés y español.",
+    "services.s1title":"Examen Teórico Escrito","services.s1desc":"No necesitas cita previa. Mostramos un video preparatorio y luego tomas el examen en computadora con retroalimentación en vivo.",
+    "services.s2title":"Examen Práctico de Manejo","services.s2desc":"Toma tu examen de carretera con instructores experimentados y pacientes que explican cada paso con claridad.",
+    "services.s3title":"Clases de Manejo","services.s3desc":"¿Nervioso al volante? Construimos tu confianza desde cero — autopistas, estacionamiento y más.",
+    "services.s4title":"Curso de Alcohol y Drogas","services.s4desc":"Cursos requeridos por el estado sobre leyes de tránsito y conciencia de sustancias, completados eficientemente.",
+    "services.s5title":"Preparación de Examen Teórico","services.s5desc":"Explicamos las leyes de tránsito y las preguntas del examen de una manera que realmente se entiende.",
+    "services.s6title":"Servicio Bilingüe","services.s6desc":"Servimos con orgullo a la comunidad del Condado de Dade en inglés y español.",
+    "why.label":"Por Qué Elegirnos",
+    "why.title":"Negocio Familiar.<br>Confianza de la Comunidad.",
+    "why.body":"Cuando entras por nuestra puerta, no eres un número — eres familia. La comunidad del Condado de Dade nos ha dado su confianza durante años.",
+    "why.f1title":"Confianza en el Condado de Dade","why.f1desc":"Calificación de 4.6 estrellas de más de 50 reseñas reales de estudiantes.",
+    "why.f2title":"Instructores Cálidos y Pacientes","why.f2desc":"Maria y su equipo son conocidos por su amabilidad y la confianza que inspiran.",
+    "why.f3title":"Sin Cita Previa","why.f3desc":"No necesitas cita para el examen escrito.",
+    "why.mRating":"Calificación","why.mReviews":"Reseñas","why.mLang":"Bilingüe",
+    "reviews.label":"Estudiantes Reales, Resultados Reales","reviews.title":"Lo Que Dice Nuestra Comunidad",
+    "reviews.sub":"Desde conductores primerizos hasta recién llegados encontrando su camino en un nuevo país.",
+    "reviews.googleReviews":"Reseñas de Google","reviews.verified":"Todas las reseñas verificadas en Google Maps",
+    "process.label":"Cómo Funciona","process.title":"Tu Camino Hacia la Licencia",
+    "process.sub":"Cuatro pasos. Sin estrés. Solo tú y tu nueva licencia.",
+    "process.p1title":"Ven o Llama","process.p1desc":"No necesitas cita para el examen escrito.",
+    "process.p2title":"Mira y Aprende","process.p2desc":"Mostramos un video preparatorio antes de tu examen.",
+    "process.p3title":"Examina y Practica","process.p3desc":"Toma tu examen con orientación de apoyo.",
+    "process.p4title":"Maneja Libre","process.p4desc":"Aprueba y sal a la carretera con confianza.",
+    "contact.label":"Ponte en Contacto","contact.title":"¿Listo Para Empezar Tu Camino?",
+    "contact.body":"Ya sea que reserves tu primera clase o programes tu examen práctico, estamos aquí para ti.",
+    "contact.address":"Dirección","contact.phone":"Teléfono","contact.hours":"Horario",
+    "contact.hoursValue":"Lun–Vie 8am–3pm · Sáb 8am–1pm · Dom Cerrado",
+    "contact.languages":"Idiomas",
+    "form.title":"Reserva Tu Cita","form.first":"Nombre","form.last":"Apellido","form.phone":"Número de Teléfono",
+    "form.service":"Servicio de Interés","form.serviceSelect":"Selecciona un servicio…",
+    "form.opt1":"Examen Teórico Escrito","form.opt2":"Examen Práctico de Manejo","form.opt3":"Clases de Manejo","form.opt4":"Curso de Alcohol y Drogas","form.opt5":"Preparación de Examen Teórico",
+    "form.lang":"Idioma Preferido","form.notes":"Preguntas o Notas","form.notesPlaceholder":"Cuéntanos un poco sobre en qué parte del proceso te encuentras…",
+    "form.submit":"Reserva Tu Cita","form.successTitle":"¡Recibimos tu solicitud!","form.successBody":"Maria o un miembro del equipo se pondrá en contacto contigo pronto.",
+    "footer.tagline":"Ayudando a los residentes del Condado de Dade a obtener su licencia con confianza, calidez y experiencia. Servimos con orgullo a nuestra comunidad en inglés y español.",
+    "footer.servicesHeader":"Servicios","footer.infoHeader":"Información","footer.why":"Por Qué Elegirnos","footer.privacy":"Política de Privacidad","footer.badge":"Sirviendo con Orgullo al Condado de Dade",
+    "privacy.title":"Política de Privacidad","privacy.updated":"Última actualización: 1 de enero de 2025",
+    "privacy.intro":"Maria Auto & Traffic School (\"nosotros\") opera este sitio web. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos la información personal que proporcionas al usar nuestro sitio o enviar una consulta a través de nuestro formulario de contacto.",
+    "privacy.h1":"1. Información Que Recopilamos","privacy.p1":"Cuando envías una solicitud de reserva, podemos recopilar tu nombre, número de teléfono, servicio de interés, idioma preferido y cualquier nota que proporciones. No recopilamos información de pago, números de Seguro Social ni identificaciones gubernamentales.",
+    "privacy.h2":"2. Cómo Usamos Tu Información","privacy.p2":"Usamos tu información únicamente para responder a tu consulta, contactarte para programar tu cita y brindarte los servicios solicitados. Nunca vendemos ni compartimos tu información con fines de marketing.",
+    "privacy.h3":"3. Cómo Almacenamos Tu Información","privacy.p3":"Las solicitudes se procesan de forma segura a través de Netlify Forms. Consulta las prácticas de Netlify en <a href=\"https://www.netlify.com/privacy/\" target=\"_blank\" rel=\"noopener\">netlify.com/privacy</a>. Eliminamos las solicitudes periódicamente una vez resueltas.",
+    "privacy.h4":"4. Cookies y Rastreo","privacy.p4":"Este sitio no utiliza cookies, análisis ni tecnología publicitaria. No se rastrean datos de navegación.",
+    "privacy.h5":"5. Tus Derechos","privacy.p5":"Puedes solicitar conocer, corregir o eliminar la información que tenemos sobre ti, o cancelar futuras comunicaciones, contactándonos directamente.",
+    "privacy.h6":"6. Contáctanos","privacy.p6":"Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Teléfono: <a href=\"tel:+13052168166\">(305) 216-8166</a>"
   }
+};
+
+function setLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  document.getElementById('html-root').setAttribute('lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (translations[lang][key]) el.innerHTML = translations[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang][key]) el.setAttribute('placeholder', translations[lang][key]);
+  });
+  document.getElementById('lang-btn-label').textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-option, .mobile-lang button').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+  try { localStorage.setItem('maria_lang', lang); } catch(e) {}
+}
+
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(0,0,0,0.4)' : 'none';
+});
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+document.querySelectorAll('.mobile-menu a.mobile-link').forEach(link => {
+  link.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
+});
+
+const langBtn = document.getElementById('lang-btn');
+const langMenu = document.getElementById('lang-menu');
+langBtn.addEventListener('click', (e) => { e.stopPropagation(); langMenu.classList.toggle('open'); });
+document.addEventListener('click', () => langMenu.classList.remove('open'));
+document.querySelectorAll('.lang-option').forEach(btn => {
+  btn.addEventListener('click', () => { setLanguage(btn.getAttribute('data-lang')); langMenu.classList.remove('open'); });
+});
+document.querySelectorAll('.mobile-lang button').forEach(btn => {
+  btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+});
+
+let savedLang = 'en';
+try { savedLang = localStorage.getItem('maria_lang') || 'en'; } catch(e) {}
+setLanguage(savedLang);
+
+const privacyModal = document.getElementById('privacy-modal');
+document.getElementById('privacy-link').addEventListener('click', (e) => {
+  e.preventDefault(); privacyModal.classList.add('open'); document.body.style.overflow = 'hidden';
+});
+document.getElementById('modal-close').addEventListener('click', () => {
+  privacyModal.classList.remove('open'); document.body.style.overflow = '';
+});
+privacyModal.addEventListener('click', (e) => {
+  if (e.target === privacyModal) { privacyModal.classList.remove('open'); document.body.style.overflow = ''; }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && privacyModal.classList.contains('open')) { privacyModal.classList.remove('open'); document.body.style.overflow = ''; }
+});
+
+const bookingForm = document.getElementById('booking-form');
+const formSuccess = document.getElementById('form-success');
+if (bookingForm) {
+  bookingForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    const formData = new FormData(bookingForm);
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(formData).toString() })
+      .then(() => { bookingForm.style.display = 'none'; formSuccess.style.display = 'block'; })
+      .catch(() => {
+        btn.textContent = 'Something went wrong — please call us';
+        btn.style.background = 'rgba(232,112,74,0.8)'; btn.disabled = false;
+        setTimeout(() => { btn.textContent = 'Book Your Session'; btn.style.background = ''; }, 5000);
+      });
+  });
+}
 </script>
 </body>
 </html>
