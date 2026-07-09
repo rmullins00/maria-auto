@@ -221,6 +221,33 @@
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(201,168,76,0.4); }
   .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
   .form-group textarea { height: 90px; resize: none; }
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .checkbox-item { position: relative; }
+  .checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .checkbox-item label {
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; font-size: 0.9rem; color: rgba(255,255,255,0.75);
+    padding: 10px 14px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.2s; user-select: none;
+  }
+  .checkbox-item label:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.06); color: rgba(255,255,255,0.95); }
+  .checkbox-item input[type="checkbox"]:checked + label {
+    border-color: var(--gold); background: rgba(201,168,76,0.12); color: #fff;
+  }
+  .checkbox-box {
+    width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-size: 0.75rem;
+  }
+  .checkbox-item label:hover .checkbox-box { border-color: var(--gold); }
+  .checkbox-item input[type="checkbox"]:checked + label .checkbox-box {
+    background: var(--gold); border-color: var(--gold); color: var(--navy);
+  }
+  .checkbox-item input[type="checkbox"]:checked + label .checkbox-box::after { content: '✓'; font-weight: 700; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .btn-submit { width: 100%; padding: 14px; background: var(--gold); color: var(--navy); border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 18px rgba(201,168,76,0.3); margin-top: 4px; }
   .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
@@ -513,31 +540,38 @@
   </div>
   <div class="contact-form" style="position:relative;z-index:1">
     <h3 data-i18n="form.title">Book Your Session</h3>
-    <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="booking-form">
-      <input type="hidden" name="form-name" value="booking">
-      <p style="display:none"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+    <form action="https://formspree.io/f/mrewngqb" method="POST" id="booking-form">
       <div class="form-row">
         <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" required></div>
         <div class="form-group"><label data-i18n="form.last">Last Name</label><input type="text" name="last_name" placeholder="Garcia" required></div>
       </div>
       <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" placeholder="(305) 000-0000" required></div>
       <div class="form-group">
-        <label data-i18n="form.service">Service Interested In</label>
-        <select name="service" required>
-          <option value="" disabled selected data-i18n="form.serviceSelect">Select a service…</option>
-          <option data-i18n="form.opt1">Written Knowledge Test</option>
-          <option data-i18n="form.opt2">Practical Driving Exam</option>
-          <option data-i18n="form.opt3">Driving Lessons</option>
-          <option data-i18n="form.opt4">Alcohol & Drug Course</option>
-          <option data-i18n="form.opt5">Theory Exam Prep</option>
-        </select>
+        <label data-i18n="form.service" style="display:block;margin-bottom:10px">Service Interested In</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="service2" name="services" value="Practical Driving Exam">
+            <label for="service2"><span class="checkbox-box"></span><span data-i18n="form.opt2">Practical Driving Exam</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$150</span></label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service3" name="services" value="Driving Lessons">
+            <label for="service3"><span class="checkbox-box"></span><span data-i18n="form.opt3">Driving Lessons</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85;text-align:right;line-height:1.4">from $50/hr<br><span style="font-size:0.7rem;opacity:0.75">travel fee may apply</span></span></label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service4" name="services" value="Alcohol & Drug Course">
+            <label for="service4"><span class="checkbox-box"></span><span data-i18n="form.opt4">Alcohol & Drug Course</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$50</span></label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service5" name="services" value="Theoretical Exam (exam prep included)">
+            <label for="service5"><span class="checkbox-box"></span><span data-i18n="form.opt5">Theoretical Exam (exam prep included)</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$150</span></label>
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label data-i18n="form.lang">Preferred Language</label>
         <select name="language"><option>English</option><option>Español</option></select>
       </div>
       <div class="form-group"><label data-i18n="form.notes">Questions or Notes</label><textarea name="notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Tell us a little about where you are in the process…"></textarea></div>
-      <div data-netlify-recaptcha="true" style="margin-bottom:14px"></div>
       <button type="submit" class="btn-submit" id="submit-btn" data-i18n="form.submit">Book Your Session</button>
     </form>
     <div class="form-success" id="form-success">
@@ -802,8 +836,19 @@ if (bookingForm) {
     const btn = document.getElementById('submit-btn');
     btn.textContent = 'Sending…'; btn.disabled = true;
     const formData = new FormData(bookingForm);
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(formData).toString() })
-      .then(() => { bookingForm.style.display = 'none'; formSuccess.style.display = 'block'; })
+    fetch('https://formspree.io/f/mrewngqb', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(res => {
+        if (res.ok) {
+          bookingForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        } else {
+          throw new Error('Form error');
+        }
+      })
       .catch(() => {
         btn.textContent = 'Something went wrong — please call us';
         btn.style.background = 'rgba(232,112,74,0.8)'; btn.disabled = false;
