@@ -222,6 +222,37 @@
   .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
   .form-group textarea { height: 90px; resize: none; }
   .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-hint { font-size: 0.78rem; color: var(--gold); opacity: 0.9; margin-top: 6px; line-height: 1.5; display: none; }
+  .form-hint.visible { display: block; }
+  .availability-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(76,175,122,0.1); border: 1px solid rgba(76,175,122,0.25);
+    padding: 10px 14px; border-radius: 8px; margin-bottom: 18px;
+  }
+  .availability-dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf7a; flex-shrink: 0; }
+  .availability-badge span { font-size: 0.82rem; color: rgba(255,255,255,0.75); line-height: 1.4; }
+  .whatsapp-fallback {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 12px; padding: 12px; border-radius: 6px;
+    background: rgba(76,175,122,0.08); border: 1px solid rgba(76,175,122,0.2);
+    color: #6fcf97; text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .whatsapp-fallback:hover { background: rgba(76,175,122,0.15); }
+  .service-datetime-block {
+    background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px; padding: 14px 14px 4px; margin-bottom: 14px;
+  }
+  .service-datetime-label {
+    font-size: 0.78rem; font-weight: 500; color: var(--gold-light);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .service-datetime-label .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .range-toggle-row { display: flex; align-items: center; gap: 8px; margin: -4px 0 12px; }
+  .range-toggle-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--gold); }
+  .range-toggle-row label { font-size: 0.78rem; color: rgba(255,255,255,0.55); cursor: pointer; margin: 0; text-transform: none; letter-spacing: 0; }
+  .end-date-group { display: none; }
+  .end-date-group.visible { display: block; }
   .checkbox-item { position: relative; }
   .checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
   .checkbox-item label {
@@ -540,6 +571,10 @@
   </div>
   <div class="contact-form" style="position:relative;z-index:1">
     <h3 data-i18n="form.title">Book Your Session</h3>
+    <div class="availability-badge">
+      <span class="availability-dot"></span>
+      <span data-i18n="form.availabilityNote">Currently booking appointments 3–5 days out. Saturdays fill up fastest — weekdays have more openings.</span>
+    </div>
     <form action="https://formspree.io/f/mrewngqb" method="POST" id="booking-form">
       <div class="form-row">
         <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" required></div>
@@ -550,23 +585,28 @@
         <label data-i18n="form.service" style="display:block;margin-bottom:10px">Service Interested In</label>
         <div class="checkbox-group">
           <div class="checkbox-item">
-            <input type="checkbox" id="service2" name="services" value="Practical Driving Exam">
+            <input type="checkbox" id="service2" name="services" value="Practical Driving Exam" data-hint="hintExam">
             <label for="service2"><span class="checkbox-box"></span><span data-i18n="form.opt2">Practical Driving Exam</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$150</span></label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service3" name="services" value="Driving Lessons">
+            <input type="checkbox" id="service3" name="services" value="Driving Lessons" data-hint="hintLessons">
             <label for="service3"><span class="checkbox-box"></span><span data-i18n="form.opt3">Driving Lessons</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85;text-align:right;line-height:1.4">from $50/hr<br><span style="font-size:0.7rem;opacity:0.75">travel fee may apply</span></span></label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service4" name="services" value="Alcohol & Drug Course">
+            <input type="checkbox" id="service4" name="services" value="Alcohol & Drug Course" data-hint="">
             <label for="service4"><span class="checkbox-box"></span><span data-i18n="form.opt4">Alcohol & Drug Course</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$50</span></label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service5" name="services" value="Theoretical Exam (prep included)">
+            <input type="checkbox" id="service5" name="services" value="Theoretical Exam (prep included)" data-hint="hintTheory">
             <label for="service5"><span class="checkbox-box"></span><span data-i18n="form.opt5">Theoretical Exam (prep included)</span><span style="margin-left:auto;font-size:0.78rem;color:var(--gold);opacity:0.85">$150</span></label>
           </div>
         </div>
+        <p class="form-hint" id="hintExam" data-i18n="form.hintExam">Please bring a valid ID and your learner's permit to this appointment.</p>
+        <p class="form-hint" id="hintLessons" data-i18n="form.hintLessons">Let us know below if you'd like us to come to you — a travel fee may apply depending on distance.</p>
+        <p class="form-hint" id="hintTheory" data-i18n="form.hintTheory">This session can accommodate multiple students at once — great if you're booking with a friend or family member.</p>
       </div>
+      <div id="datetime-container"></div>
+      <p class="form-hint visible" id="datetime-placeholder" data-i18n="form.datetimePlaceholder">Select a service above to choose your preferred date and time.</p>
       <div class="form-group">
         <label data-i18n="form.lang">Preferred Language</label>
         <select name="language"><option>English</option><option>Español</option></select>
@@ -574,6 +614,9 @@
       <div class="form-group"><label data-i18n="form.notes">Questions or Notes</label><textarea name="notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Tell us a little about where you are in the process…"></textarea></div>
       <button type="submit" class="btn-submit" id="submit-btn" data-i18n="form.submit">Book Your Session</button>
     </form>
+    <a href="https://wa.me/13052168166?text=Hi!%20I'd%20like%20to%20book%20an%20appointment%20at%20Maria%20Auto%20%26%20Traffic%20School." target="_blank" rel="noopener" class="whatsapp-fallback">
+      <span>💬</span><span data-i18n="form.whatsapp">Prefer to text us instead? Message us on WhatsApp</span>
+    </a>
     <div class="form-success" id="form-success">
       <div class="form-success-icon">✓</div>
       <h4 data-i18n="form.successTitle">We received your request!</h4>
@@ -689,6 +732,14 @@ const translations = {
     "form.service":"Service Interested In","form.serviceSelect":"Select a service…",
     "form.opt1":"Written Knowledge Test","form.opt2":"Practical Driving Exam","form.opt3":"Driving Lessons","form.opt4":"Alcohol & Drug Course","form.opt5":"Theoretical Exam (prep included)",
     "form.lang":"Preferred Language","form.notes":"Questions or Notes","form.notesPlaceholder":"Tell us a little about where you are in the process…",
+    "form.availabilityNote":"Currently booking appointments 3–5 days out. Saturdays fill up fastest — weekdays have more openings.",
+    "form.hintExam":"Please bring a valid ID and your learner's permit to this appointment.",
+    "form.hintLessons":"Let us know below if you'd like us to come to you — a travel fee may apply depending on distance.",
+    "form.hintTheory":"This session can accommodate multiple students at once — great if you're booking with a friend or family member.",
+    "form.preferredDate":"Preferred Date","form.preferredTime":"Preferred Time","form.timeSelect":"Select a time…",
+    "form.datetimePlaceholder":"Select a service above to choose your preferred date and time.",
+    "form.timeMorning":"Morning (8am–11am)","form.timeMidday":"Midday (11am–1pm)","form.timeAfternoon":"Afternoon (1pm–3pm)",
+    "form.whatsapp":"Prefer to text us instead? Message us on WhatsApp",
     "form.submit":"Book Your Session","form.successTitle":"We received your request!","form.successBody":"Maria or a team member will be in touch with you shortly.",
     "footer.tagline":"Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.",
     "footer.servicesHeader":"Services","footer.infoHeader":"Info","footer.why":"Why Choose Us","footer.privacy":"Privacy Policy","footer.badge":"Proudly Serving Dade County",
@@ -744,6 +795,14 @@ const translations = {
     "form.service":"Servicio de Interés","form.serviceSelect":"Selecciona un servicio…",
     "form.opt1":"Examen Teórico Escrito","form.opt2":"Examen Práctico de Manejo","form.opt3":"Clases de Manejo","form.opt4":"Curso de Alcohol y Drogas","form.opt5":"Preparación de Examen Teórico",
     "form.lang":"Idioma Preferido","form.notes":"Preguntas o Notas","form.notesPlaceholder":"Cuéntanos un poco sobre en qué parte del proceso te encuentras…",
+    "form.availabilityNote":"Actualmente reservando citas con 3–5 días de anticipación. Los sábados se llenan más rápido — hay más disponibilidad entre semana.",
+    "form.hintExam":"Por favor trae una identificación válida y tu permiso de aprendizaje a esta cita.",
+    "form.hintLessons":"Avísanos abajo si prefieres que vayamos a ti — puede aplicar un cargo por desplazamiento según la distancia.",
+    "form.hintTheory":"Esta sesión puede acomodar a varios estudiantes a la vez — ideal si reservas con un amigo o familiar.",
+    "form.preferredDate":"Fecha Preferida","form.preferredTime":"Hora Preferida","form.timeSelect":"Selecciona una hora…",
+    "form.datetimePlaceholder":"Selecciona un servicio arriba para elegir tu fecha y hora preferida.",
+    "form.timeMorning":"Mañana (8am–11am)","form.timeMidday":"Mediodía (11am–1pm)","form.timeAfternoon":"Tarde (1pm–3pm)",
+    "form.whatsapp":"¿Prefieres escribirnos? Contáctanos por WhatsApp",
     "form.submit":"Reserva Tu Cita","form.successTitle":"¡Recibimos tu solicitud!","form.successBody":"Maria o un miembro del equipo se pondrá en contacto contigo pronto.",
     "footer.tagline":"Ayudando a los residentes del Condado de Dade a obtener su licencia con confianza, calidez y experiencia. Servimos con orgullo a nuestra comunidad en inglés y español.",
     "footer.servicesHeader":"Servicios","footer.infoHeader":"Información","footer.why":"Por Qué Elegirnos","footer.privacy":"Política de Privacidad","footer.badge":"Sirviendo con Orgullo al Condado de Dade",
@@ -826,6 +885,124 @@ privacyModal.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && privacyModal.classList.contains('open')) { privacyModal.classList.remove('open'); document.body.style.overflow = ''; }
+});
+
+// Dynamic per-service date & time pickers
+const datetimeContainer = document.getElementById('datetime-container');
+const datetimePlaceholder = document.getElementById('datetime-placeholder');
+
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+function getDateMinMax() {
+  const today = new Date();
+  const minDate = new Date(today);
+  minDate.setDate(today.getDate() + 1);
+  const maxDate = new Date(today);
+  maxDate.setDate(today.getDate() + 60);
+  return {
+    min: minDate.toISOString().split('T')[0],
+    max: maxDate.toISOString().split('T')[0]
+  };
+}
+
+function buildServiceDatetimeBlock(serviceCheckbox) {
+  const serviceValue = serviceCheckbox.value;
+  const slug = slugify(serviceValue);
+  const labelEl = serviceCheckbox.closest('.checkbox-item').querySelector('label span[data-i18n]');
+  const serviceName = labelEl ? labelEl.textContent : serviceValue;
+
+  const block = document.createElement('div');
+  block.className = 'service-datetime-block';
+  block.id = `datetime-block-${slug}`;
+
+  const { min, max } = getDateMinMax();
+  const isEs = document.getElementById('html-root').lang === 'es';
+
+  block.innerHTML = `
+    <div class="service-datetime-label"><span class="dot"></span><span>${serviceName}</span></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="date-start-label">${isEs ? 'Fecha Preferida' : 'Preferred Date'}</label>
+        <input type="date" name="preferred_date__${slug}" class="service-date-input" min="${min}" max="${max}" required>
+      </div>
+      <div class="form-group">
+        <label>${isEs ? 'Hora Preferida' : 'Preferred Time'}</label>
+        <select name="preferred_time__${slug}" class="service-time-input" required>
+          <option value="" disabled selected>${isEs ? 'Selecciona una hora…' : 'Select a time…'}</option>
+          <option>${isEs ? 'Mañana (8am–11am)' : 'Morning (8am–11am)'}</option>
+          <option>${isEs ? 'Mediodía (11am–1pm)' : 'Midday (11am–1pm)'}</option>
+          <option>${isEs ? 'Tarde (1pm–3pm)' : 'Afternoon (1pm–3pm)'}</option>
+        </select>
+      </div>
+    </div>
+    <div class="range-toggle-row">
+      <input type="checkbox" id="range-toggle-${slug}" class="range-toggle-input">
+      <label for="range-toggle-${slug}">${isEs ? 'Seleccionar un rango de fechas en vez de una sola fecha' : 'Select a range of dates instead of a single date'}</label>
+    </div>
+    <div class="form-group end-date-group" id="end-date-group-${slug}">
+      <label>${isEs ? 'Fecha de Fin' : 'End Date'}</label>
+      <input type="date" name="preferred_date_end__${slug}" class="service-end-date-input" min="${min}" max="${max}">
+    </div>
+  `;
+
+  const dateInput = block.querySelector('.service-date-input');
+  const endDateGroup = block.querySelector(`#end-date-group-${slug}`);
+  const endDateInput = block.querySelector('.service-end-date-input');
+  const rangeToggle = block.querySelector(`#range-toggle-${slug}`);
+  const startLabel = block.querySelector('.date-start-label');
+
+  function validateNotSunday(input) {
+    if (!input.value) return;
+    const selected = new Date(input.value + 'T00:00:00');
+    if (selected.getDay() === 0) {
+      alert(isEs ? 'Estamos cerrados los domingos — elige otro día.' : "We're closed on Sundays — please choose another day.");
+      input.value = '';
+    }
+  }
+
+  dateInput.addEventListener('input', function () {
+    validateNotSunday(this);
+    if (this.value) endDateInput.min = this.value;
+  });
+
+  endDateInput.addEventListener('input', function () {
+    validateNotSunday(this);
+  });
+
+  rangeToggle.addEventListener('change', function () {
+    endDateGroup.classList.toggle('visible', this.checked);
+    endDateInput.required = this.checked;
+    startLabel.textContent = this.checked ? (isEs ? 'Fecha de Inicio' : 'Start Date') : (isEs ? 'Fecha Preferida' : 'Preferred Date');
+  });
+
+  return block;
+}
+
+document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"]').forEach(checkbox => {
+  checkbox.addEventListener('change', function () {
+    const slug = slugify(this.value);
+    const existingBlock = document.getElementById(`datetime-block-${slug}`);
+
+    if (this.checked && !existingBlock) {
+      const block = buildServiceDatetimeBlock(this);
+      datetimeContainer.appendChild(block);
+    } else if (!this.checked && existingBlock) {
+      existingBlock.remove();
+    }
+
+    const anyChecked = document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"]:checked').length > 0;
+    datetimePlaceholder.classList.toggle('visible', !anyChecked);
+  });
+
+  const hintId = checkbox.getAttribute('data-hint');
+  if (hintId) {
+    checkbox.addEventListener('change', function () {
+      const hintEl = document.getElementById(hintId);
+      if (hintEl) hintEl.classList.toggle('visible', this.checked);
+    });
+  }
 });
 
 const bookingForm = document.getElementById('booking-form');
