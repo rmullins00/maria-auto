@@ -5,13 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maria Auto & Traffic School — Dade County's Trusted Driving School</title>
 
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1f3c'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='58' font-weight='700' fill='%23c9a84c' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
 <meta name="description" content="Maria Auto & Traffic School — Miami-Dade's trusted driving school. Written tests, road exams, and driving lessons in English and Spanish. Walk-ins welcome.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mariaautoschool.netlify.app/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Maria Auto & Traffic School">
 <meta property="og:description" content="Miami-Dade's trusted driving school. Written tests, road exams & driving lessons in English and Spanish.">
-
+<meta property="og:image" content="https://mariaautoschool.netlify.app/images/maria3.jpg">
+<meta property="og:image:alt" content="Students celebrating passing their driving test outside Maria Auto & Traffic School">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mariaautoschool.netlify.app/images/maria3.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&display=swap" rel="stylesheet">
 <style>
@@ -364,6 +369,43 @@
   .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed; bottom: 28px; right: 28px; z-index: 90;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--navy); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light); font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s, background 0.2s;
+  }
+  .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .back-to-top:hover { background: var(--navy-mid); }
+  @media (max-width: 900px) {
+    .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+  }
+
+  /* ── FAQ ── */
+  .faq { padding: 70px 56px; background: var(--warm-white); }
+  .faq-header { text-align: center; margin-bottom: 44px; }
+  .faq-header p { color: var(--text-mid); font-size: 0.92rem; max-width: 480px; margin: 8px auto 0; line-height: 1.6; }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .faq-item:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+  .faq-question {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 20px 4px; background: none; border: none; cursor: pointer;
+    text-align: left; font-family: 'DM Sans', sans-serif;
+  }
+  .faq-question span:first-child { font-size: 0.98rem; font-weight: 500; color: var(--navy); }
+  .faq-icon { font-size: 1.3rem; color: var(--gold); flex-shrink: 0; transition: transform 0.25s; line-height: 1; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+  }
+  .faq-answer p { padding: 0 4px 20px; font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; }
+
   /* ── MODAL ── */
   .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(8,15,30,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
@@ -390,8 +432,8 @@
     .hero-left { padding: 40px 20px 30px; }
     .hero-right { padding: 0 20px 40px; }
     .hero-photo-wrap { max-width: 100%; }
-    .services, .why, .reviews-header, .process, .contact, footer { padding-left: 20px; padding-right: 20px; }
-    .services, .why, .process, .contact { padding-top: 50px; padding-bottom: 50px; }
+    .services, .why, .reviews-header, .process, .contact, .faq, footer { padding-left: 20px; padding-right: 20px; }
+    .services, .why, .process, .contact, .faq { padding-top: 50px; padding-bottom: 50px; }
     .services-header, .why, .contact { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: 1fr; }
     .why-photo-grid { grid-template-columns: 1fr; }
@@ -404,7 +446,112 @@
     .reviews-track { padding: 6px 20px; }
     .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
   }
+
+  /* ── ACCESSIBILITY: VISIBLE FOCUS STATES ── */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+  .checkbox-item input[type="checkbox"]:focus-visible + label,
+  .day-pill-item input[type="checkbox"]:focus-visible + label,
+  .contact-pref-item input[type="checkbox"]:focus-visible + label {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+  .range-toggle-row input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+  .nav-hamburger:focus-visible, .modal-close:focus-visible, .lang-btn:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DrivingSchool",
+  "name": "Maria Auto & Traffic School",
+  "image": "https://mariaautoschool.netlify.app/images/maria5.jpg",
+  "url": "https://mariaautoschool.netlify.app/",
+  "telephone": "+1-305-216-8166",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "281 NW 82nd Ave",
+    "addressLocality": "Miami",
+    "addressRegion": "FL",
+    "postalCode": "33126",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "15:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "08:00",
+      "closes": "13:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.6",
+    "reviewCount": "50",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "priceRange": "$50-$150",
+  "areaServed": "Miami-Dade County, FL",
+  "availableLanguage": ["English", "Spanish"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need an appointment for the written test?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — walk-ins are always welcome for the written knowledge test, no appointment needed. We'll screen a short prep video before you take the computerized exam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you speak Spanish?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes! Our entire team is bilingual, and this website works in both English and Spanish." }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I bring to my appointment?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A valid photo ID for all services, and your learner's permit if you're taking the practical driving exam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can multiple people book the theoretical exam together?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — this session can accommodate multiple students at once, so it's great if you're coming in with a friend or family member." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer driving lessons at my location?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We can come to you for driving lessons — a travel fee may apply depending on distance." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is submitting the booking form a guaranteed appointment?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not automatically — it's a request. We'll confirm your appointment by phone, text, or email." }
+    },
+    {
+      "@type": "Question",
+      "name": "What are your hours?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Monday–Friday 8:00 AM–3:00 PM, Saturday 8:00 AM–1:00 PM, closed Sundays." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -414,6 +561,7 @@
   <ul class="nav-links">
     <li><a href="#services" data-i18n="nav.services">Services</a></li>
     <li><a href="#process" data-i18n="nav.process">How It Works</a></li>
+    <li><a href="#faq" data-i18n="footer.faq">FAQ</a></li>
     <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
@@ -433,6 +581,7 @@
 <div class="mobile-menu" id="mobile-menu">
   <a href="#services" class="mobile-link" data-i18n="nav.services">Services</a>
   <a href="#process" class="mobile-link" data-i18n="nav.process">How It Works</a>
+  <a href="#faq" class="mobile-link" data-i18n="footer.faq">FAQ</a>
   <a href="#reviews" class="mobile-link" data-i18n="nav.reviews">Reviews</a>
   <a href="#contact" class="mobile-link" data-i18n="nav.contact">Contact</a>
   <div class="mobile-lang">
@@ -486,8 +635,8 @@
   <div class="services-grid">
     <div class="service-card fade-up">
       <div class="service-icon">📝</div>
-      <h3 class="service-name" data-i18n="services.s1title">Written Knowledge Test</h3>
-      <p class="service-desc" data-i18n="services.s1desc">No appointment needed. We screen a prep video, then you take the computerized test with live feedback — stress-free.</p>
+      <h3 class="service-name" data-i18n="services.s5title">Theoretical Exam (prep included)</h3>
+      <p class="service-desc" data-i18n="services.s5desc">Walk in with no appointment needed — we screen a prep video, then you take the exam on computer with live feedback. We break down every traffic law so it actually sticks, not just gets memorized.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🚗</div>
@@ -503,11 +652,6 @@
       <div class="service-icon">🍺</div>
       <h3 class="service-name" data-i18n="services.s4title">Alcohol & Drug Course</h3>
       <p class="service-desc" data-i18n="services.s4desc">State-required traffic law and substance awareness courses completed efficiently at our school.</p>
-    </div>
-    <div class="service-card fade-up">
-      <div class="service-icon">📋</div>
-      <h3 class="service-name" data-i18n="services.s5title">Theoretical Exam (prep included)</h3>
-      <p class="service-desc" data-i18n="services.s5desc">We break down traffic laws and exam questions in a way that truly sticks with you.</p>
     </div>
     <div class="service-card fade-up">
       <div class="service-icon">🌐</div>
@@ -540,10 +684,10 @@
   </div>
   <div class="why-right">
     <div class="why-photo-grid">
-      <div class="why-photo-main"><img src="images/maria1.jpg" alt="Happy students waiting inside Maria Auto & Traffic School"></div>
+      <div class="why-photo-main"><img src="images/maria1.jpg" alt="Happy students waiting inside Maria Auto & Traffic School" loading="lazy"></div>
       <div class="why-photo-side">
-        <div class="why-photo-small"><img src="images/maria4.jpg" alt="Student holding Aprobé sign"></div>
-        <div class="why-photo-small"><img src="images/maria2.jpg" alt="Students with passing certificate"></div>
+        <div class="why-photo-small"><img src="images/maria4.jpg" alt="Student holding Aprobé sign" loading="lazy"></div>
+        <div class="why-photo-small"><img src="images/maria2.jpg" alt="Students with passing certificate" loading="lazy"></div>
       </div>
     </div>
     <div class="why-mini-stats">
@@ -611,13 +755,73 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-header">
+    <p class="section-label" data-i18n="faq.label">Common Questions</p>
+    <h2 class="section-title" data-i18n="faq.title">Frequently Asked Questions</h2>
+    <p data-i18n="faq.sub">Can't find what you're looking for? Message us on WhatsApp or give us a call.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q1">Do I need an appointment for the written test?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a1">No — walk-ins are always welcome for the written knowledge test, no appointment needed. We'll screen a short prep video before you take the computerized exam.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q2">Do you speak Spanish?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a2">Yes! Our entire team is bilingual, and this website works in both English and Spanish — just use the language switcher in the top menu.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q3">What should I bring to my appointment?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a3">A valid photo ID for all services, and your learner's permit if you're taking the practical driving exam. If you have questions about your specific situation, just reach out before your visit.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q4">Can multiple people book the theoretical exam together?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a4">Yes — this session can accommodate multiple students at once, so it's great if you're coming in with a friend or family member.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q5">Do you offer driving lessons at my location?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a5">We can come to you for driving lessons — a travel fee may apply depending on distance. Just let us know your preference when you submit a request.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q6">Is submitting the booking form a guaranteed appointment?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n="faq.a6">Not automatically — think of it as a request. We'll confirm your appointment by phone, text, or email, and reach out with alternative times if your preferred slot isn't available.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-i18n="faq.q7">What are your hours?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p data-i18n-html="faq.a7">Monday–Friday 8:00 AM–3:00 PM, Saturday 8:00 AM–1:00 PM, and we're closed Sundays.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-left" style="position:relative;z-index:1">
     <p class="section-label" style="color:var(--gold)" data-i18n="contact.label">Get In Touch</p>
     <h2 class="section-title" data-i18n="contact.title">Ready to Start Your Journey?</h2>
     <p class="contact-body" data-i18n="contact.body">Whether you're booking your first lesson or scheduling your road test, we're here for you.</p>
-    <div class="contact-storefront"><img src="images/maria5.jpg" alt="Maria Auto & Traffic School storefront at 281 NW 82nd Ave Miami"></div>
+    <div class="contact-storefront"><img src="images/maria5.jpg" alt="Maria Auto & Traffic School storefront at 281 NW 82nd Ave Miami" loading="lazy"></div>
     <div class="contact-info">
       <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label" data-i18n="contact.address">Address</div><div class="contact-item-text"><a href="https://maps.google.com/?q=281+NW+82nd+Ave,+Miami,+FL+33126" target="_blank" rel="noopener">281 NW 82nd Ave, Miami, FL 33126</a></div></div></div>
       <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label" data-i18n="contact.phone">Phone</div><div class="contact-item-text"><a href="tel:+13052168166">+1 (305) 216-8166</a></div></div></div>
@@ -632,15 +836,16 @@
       <span data-i18n="form.availabilityNote">Currently booking appointments 3–5 days out. Saturdays fill up fastest — weekdays have more openings.</span>
     </div>
     <form action="https://formspree.io/f/mrewngqb" method="POST" id="booking-form">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
-        <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" required></div>
-        <div class="form-group"><label data-i18n="form.last">Last Name</label><input type="text" name="last_name" placeholder="Garcia" required></div>
+        <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" autocomplete="given-name" required></div>
+        <div class="form-group"><label data-i18n="form.last">Last Name</label><input type="text" name="last_name" placeholder="Garcia" autocomplete="family-name" required></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" id="field-phone" placeholder="(305) 000-0000"></div>
-        <div class="form-group"><label data-i18n="form.email">Email Address</label><input type="email" name="email" id="field-email" placeholder="you@email.com"></div>
+        <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" id="field-phone" placeholder="(305) 000-0000" autocomplete="tel"></div>
+        <div class="form-group"><label data-i18n="form.email">Email Address</label><input type="email" name="email" id="field-email" placeholder="you@email.com" autocomplete="email"></div>
       </div>
-      <p class="field-error-msg" id="contact-required-error" data-i18n="form.contactRequiredError">Please provide a phone number or email address so we can reach you.</p>
+      <p class="field-error-msg" id="contact-required-error" data-i18n="form.contactRequiredError" role="alert" aria-live="assertive">Please provide a phone number or email address so we can reach you.</p>
       <div class="form-group">
         <label data-i18n="form.contactPref" style="display:block;margin-bottom:10px">How should we contact you?</label>
         <div class="contact-pref-row">
@@ -685,12 +890,16 @@
         <select name="language"><option>English</option><option>Español</option></select>
       </div>
       <div class="form-group"><label data-i18n="form.notes">Questions or Notes</label><textarea name="notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Tell us a little about where you are in the process…"></textarea></div>
-      <button type="submit" class="btn-submit" id="submit-btn" data-i18n="form.submit">Book Your Session</button>
+      <div class="range-toggle-row" style="margin-bottom:16px">
+        <input type="checkbox" id="consent-checkbox" required>
+        <label for="consent-checkbox" data-i18n-html="form.consentLabel">I agree to be contacted about this request and have read the <a href="#" id="consent-privacy-link" style="color:var(--gold-light);text-decoration:underline">Privacy Policy</a>.</label>
+      </div>
+      <button type="submit" class="btn-submit" id="submit-btn" data-i18n="form.submit" aria-live="polite">Book Your Session</button>
     </form>
     <a href="https://wa.me/13052168166?text=Hi!%20I'd%20like%20to%20book%20an%20appointment%20at%20Maria%20Auto%20%26%20Traffic%20School." target="_blank" rel="noopener" class="whatsapp-fallback">
       <span>💬</span><span data-i18n="form.whatsapp">Prefer to text us instead? Message us on WhatsApp</span>
     </a>
-    <div class="form-success" id="form-success">
+    <div class="form-success" id="form-success" role="status" aria-live="polite">
       <div class="form-success-icon">✓</div>
       <h4 data-i18n="form.successTitle">We received your request!</h4>
       <p data-i18n="form.successBody">Maria or a team member will be in touch with you shortly.</p>
@@ -713,7 +922,7 @@
     <div class="footer-col">
       <h4 data-i18n="footer.servicesHeader">Services</h4>
       <ul>
-        <li><a href="#services" data-i18n="services.s1title">Written Test</a></li>
+        <li><a href="#services" data-i18n="services.s5title">Theoretical Exam</a></li>
         <li><a href="#services" data-i18n="services.s2title">Road Exam</a></li>
         <li><a href="#services" data-i18n="services.s3title">Driving Lessons</a></li>
       </ul>
@@ -723,6 +932,7 @@
       <ul>
         <li><a href="#why" data-i18n="footer.why">Why Choose Us</a></li>
         <li><a href="#process" data-i18n="nav.process">How It Works</a></li>
+        <li><a href="#faq" data-i18n="footer.faq">FAQ</a></li>
         <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
@@ -733,6 +943,8 @@
     <div class="footer-dade" data-i18n="footer.badge">Proudly Serving Dade County</div>
   </div>
 </footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
 
 <!-- BOOKING CONFIRMATION MODAL -->
 <div class="booking-modal-overlay" id="booking-modal" role="dialog" aria-modal="true" aria-label="Booking request notice">
@@ -787,11 +999,10 @@ const translations = {
     "services.label":"What We Offer",
     "services.title":"Everything You Need<br>to Get Licensed",
     "services.desc":"From your first written test to your practical road exam, our team guides you with patience and expertise — in English and Spanish.",
-    "services.s1title":"Written Knowledge Test","services.s1desc":"No appointment needed. We screen a prep video, then you take the computerized test with live feedback — stress-free.",
     "services.s2title":"Practical Driving Exam","services.s2desc":"Take your road test with experienced, calm instructors who explain every step clearly.",
     "services.s3title":"Driving Lessons","services.s3desc":"Nervous behind the wheel? We build confidence from zero — highway merging, parking, and more.",
     "services.s4title":"Alcohol & Drug Course","services.s4desc":"State-required traffic law and substance awareness courses completed efficiently at our school.",
-    "services.s5title":"Theoretical Exam (prep included)","services.s5desc":"We break down traffic laws and exam questions in a way that truly sticks with you.",
+    "services.s5title":"Theoretical Exam (prep included)","services.s5desc":"Walk in with no appointment needed — we screen a prep video, then you take the exam on computer with live feedback. We break down every traffic law so it actually sticks, not just gets memorized.",
     "services.s6title":"Bilingual Service","services.s6desc":"We proudly serve the Dade County community in both English and Spanish.",
     "why.label":"Why Maria's School",
     "why.title":"Family-Run.<br>Community-Trusted.",
@@ -820,6 +1031,7 @@ const translations = {
     "form.modalTitle":"This is a request, not a confirmed booking",
     "form.modalBody":"Submitting this form does not guarantee your selected date and time. If your preferred slot isn't available, Maria or a team member will reach out by phone, text, or email to find a time that works.",
     "form.modalCancel":"Go Back","form.modalConfirm":"I Understand, Submit",
+    "form.consentLabel":"I agree to be contacted about this request and have read the <a href=\"#\" id=\"consent-privacy-link\" style=\"color:var(--gold-light);text-decoration:underline\">Privacy Policy</a>.",
     "form.service":"Service Interested In","form.serviceSelect":"Select a service…",
     "form.opt1":"Written Knowledge Test","form.opt2":"Practical Driving Exam","form.opt3":"Driving Lessons","form.opt4":"Alcohol & Drug Course","form.opt5":"Theoretical Exam (prep included)",
     "form.lang":"Preferred Language","form.notes":"Questions or Notes","form.notesPlaceholder":"Tell us a little about where you are in the process…",
@@ -833,12 +1045,28 @@ const translations = {
     "form.whatsapp":"Prefer to text us instead? Message us on WhatsApp",
     "form.submit":"Book Your Session","form.successTitle":"We received your request!","form.successBody":"Maria or a team member will be in touch with you shortly.",
     "footer.tagline":"Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.",
-    "footer.servicesHeader":"Services","footer.infoHeader":"Info","footer.why":"Why Choose Us","footer.privacy":"Privacy Policy","footer.badge":"Proudly Serving Dade County",
+    "footer.servicesHeader":"Services","footer.infoHeader":"Info","footer.why":"Why Choose Us","footer.faq":"FAQ","footer.privacy":"Privacy Policy","footer.badge":"Proudly Serving Dade County",
+    "faq.label":"Common Questions","faq.title":"Frequently Asked Questions",
+    "faq.sub":"Can't find what you're looking for? Message us on WhatsApp or give us a call.",
+    "faq.q1":"Do I need an appointment for the written test?",
+    "faq.a1":"No — walk-ins are always welcome for the written knowledge test, no appointment needed. We'll screen a short prep video before you take the computerized exam.",
+    "faq.q2":"Do you speak Spanish?",
+    "faq.a2":"Yes! Our entire team is bilingual, and this website works in both English and Spanish — just use the language switcher in the top menu.",
+    "faq.q3":"What should I bring to my appointment?",
+    "faq.a3":"A valid photo ID for all services, and your learner's permit if you're taking the practical driving exam. If you have questions about your specific situation, just reach out before your visit.",
+    "faq.q4":"Can multiple people book the theoretical exam together?",
+    "faq.a4":"Yes — this session can accommodate multiple students at once, so it's great if you're coming in with a friend or family member.",
+    "faq.q5":"Do you offer driving lessons at my location?",
+    "faq.a5":"We can come to you for driving lessons — a travel fee may apply depending on distance. Just let us know your preference when you submit a request.",
+    "faq.q6":"Is submitting the booking form a guaranteed appointment?",
+    "faq.a6":"Not automatically — think of it as a request. We'll confirm your appointment by phone, text, or email, and reach out with alternative times if your preferred slot isn't available.",
+    "faq.q7":"What are your hours?",
+    "faq.a7":"Monday–Friday 8:00 AM–3:00 PM, Saturday 8:00 AM–1:00 PM, and we're closed Sundays.",
     "privacy.title":"Privacy Policy","privacy.updated":"Last updated: January 1, 2025",
     "privacy.intro":"Maria Auto & Traffic School (\"we,\" \"us,\" or \"our\") operates this website. This Privacy Policy explains how we collect, use, and protect the personal information you provide when you use our site or submit an inquiry through our contact form.",
     "privacy.h1":"1. Information We Collect","privacy.p1":"When you submit a booking inquiry, we may collect your name, phone number, service interest, preferred language, and any notes you provide. We do not collect payment information, Social Security numbers, or government ID numbers.",
     "privacy.h2":"2. How We Use Your Information","privacy.p2":"We use your information solely to respond to your inquiry, contact you to schedule your session, and provide the services you requested. We never sell or share your information for marketing purposes.",
-    "privacy.h3":"3. How We Store Your Information","privacy.p3":"Form submissions are processed securely through Netlify Forms. Review Netlify's practices at <a href=\"https://www.netlify.com/privacy/\" target=\"_blank\" rel=\"noopener\">netlify.com/privacy</a>. We delete submissions periodically once resolved.",
+    "privacy.h3":"3. How We Store Your Information","privacy.p3":"Form submissions are processed securely through Formspree, a third-party form service. Review Formspree's practices at <a href=\"https://formspree.io/legal/privacy-policy/\" target=\"_blank\" rel=\"noopener\">formspree.io/legal/privacy-policy</a>. We delete submissions periodically once resolved.",
     "privacy.h4":"4. Cookies & Tracking","privacy.p4":"This site uses no cookies, analytics, or advertising technology. No browsing data is tracked.",
     "privacy.h5":"5. Your Rights","privacy.p5":"You may request to know, correct, or delete the information we hold about you, or opt out of future communications, by contacting us directly.",
     "privacy.h6":"6. Contact Us","privacy.p6":"Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Phone: <a href=\"tel:+13052168166\">(305) 216-8166</a>"
@@ -855,11 +1083,10 @@ const translations = {
     "services.label":"Lo Que Ofrecemos",
     "services.title":"Todo Lo Que Necesitas<br>Para Obtener Tu Licencia",
     "services.desc":"Desde tu primer examen escrito hasta tu examen práctico de manejo, nuestro equipo te guía con paciencia y experiencia — en inglés y español.",
-    "services.s1title":"Examen Teórico Escrito","services.s1desc":"No necesitas cita previa. Mostramos un video preparatorio y luego tomas el examen en computadora con retroalimentación en vivo.",
     "services.s2title":"Examen Práctico de Manejo","services.s2desc":"Toma tu examen de carretera con instructores experimentados y pacientes que explican cada paso con claridad.",
     "services.s3title":"Clases de Manejo","services.s3desc":"¿Nervioso al volante? Construimos tu confianza desde cero — autopistas, estacionamiento y más.",
     "services.s4title":"Curso de Alcohol y Drogas","services.s4desc":"Cursos requeridos por el estado sobre leyes de tránsito y conciencia de sustancias, completados eficientemente.",
-    "services.s5title":"Preparación de Examen Teórico","services.s5desc":"Explicamos las leyes de tránsito y las preguntas del examen de una manera que realmente se entiende.",
+    "services.s5title":"Examen Teórico (preparación incluida)","services.s5desc":"Ven sin cita previa — mostramos un video preparatorio y luego tomas el examen en computadora con retroalimentación en vivo. Explicamos cada ley de tránsito para que realmente se entienda, no solo se memorice.",
     "services.s6title":"Servicio Bilingüe","services.s6desc":"Servimos con orgullo a la comunidad del Condado de Dade en inglés y español.",
     "why.label":"Por Qué Elegirnos",
     "why.title":"Negocio Familiar.<br>Confianza de la Comunidad.",
@@ -888,6 +1115,7 @@ const translations = {
     "form.modalTitle":"Esto es una solicitud, no una reserva confirmada",
     "form.modalBody":"Enviar este formulario no garantiza tu fecha y hora seleccionada. Si tu horario preferido no está disponible, Maria o un miembro del equipo se pondrá en contacto por teléfono, texto o correo electrónico para encontrar un horario que funcione.",
     "form.modalCancel":"Regresar","form.modalConfirm":"Entiendo, Enviar",
+    "form.consentLabel":"Acepto ser contactado sobre esta solicitud y he leído la <a href=\"#\" id=\"consent-privacy-link\" style=\"color:var(--gold-light);text-decoration:underline\">Política de Privacidad</a>.",
     "form.service":"Servicio de Interés","form.serviceSelect":"Selecciona un servicio…",
     "form.opt1":"Examen Teórico Escrito","form.opt2":"Examen Práctico de Manejo","form.opt3":"Clases de Manejo","form.opt4":"Curso de Alcohol y Drogas","form.opt5":"Preparación de Examen Teórico",
     "form.lang":"Idioma Preferido","form.notes":"Preguntas o Notas","form.notesPlaceholder":"Cuéntanos un poco sobre en qué parte del proceso te encuentras…",
@@ -901,12 +1129,28 @@ const translations = {
     "form.whatsapp":"¿Prefieres escribirnos? Contáctanos por WhatsApp",
     "form.submit":"Reserva Tu Cita","form.successTitle":"¡Recibimos tu solicitud!","form.successBody":"Maria o un miembro del equipo se pondrá en contacto contigo pronto.",
     "footer.tagline":"Ayudando a los residentes del Condado de Dade a obtener su licencia con confianza, calidez y experiencia. Servimos con orgullo a nuestra comunidad en inglés y español.",
-    "footer.servicesHeader":"Servicios","footer.infoHeader":"Información","footer.why":"Por Qué Elegirnos","footer.privacy":"Política de Privacidad","footer.badge":"Sirviendo con Orgullo al Condado de Dade",
+    "footer.servicesHeader":"Servicios","footer.infoHeader":"Información","footer.why":"Por Qué Elegirnos","footer.faq":"Preguntas Frecuentes","footer.privacy":"Política de Privacidad","footer.badge":"Sirviendo con Orgullo al Condado de Dade",
+    "faq.label":"Preguntas Comunes","faq.title":"Preguntas Frecuentes",
+    "faq.sub":"¿No encuentras lo que buscas? Escríbenos por WhatsApp o llámanos.",
+    "faq.q1":"¿Necesito una cita para el examen escrito?",
+    "faq.a1":"No — siempre aceptamos clientes sin cita previa para el examen teórico escrito. Mostramos un breve video preparatorio antes de que tomes el examen en computadora.",
+    "faq.q2":"¿Hablan español?",
+    "faq.a2":"¡Sí! Todo nuestro equipo es bilingüe, y este sitio web funciona en inglés y español — solo usa el selector de idioma en el menú superior.",
+    "faq.q3":"¿Qué debo llevar a mi cita?",
+    "faq.a3":"Una identificación con foto válida para todos los servicios, y tu permiso de aprendizaje si vas a tomar el examen práctico de manejo. Si tienes preguntas sobre tu situación específica, contáctanos antes de tu visita.",
+    "faq.q4":"¿Pueden varias personas reservar el examen teórico juntas?",
+    "faq.a4":"Sí — esta sesión puede acomodar a varios estudiantes a la vez, ideal si vienes con un amigo o familiar.",
+    "faq.q5":"¿Ofrecen clases de manejo en mi ubicación?",
+    "faq.a5":"Podemos ir a tu ubicación para las clases de manejo — puede aplicar un cargo por desplazamiento según la distancia. Solo indícanos tu preferencia al enviar tu solicitud.",
+    "faq.q6":"¿Enviar el formulario de reserva garantiza mi cita?",
+    "faq.a6":"No automáticamente — considéralo una solicitud. Confirmaremos tu cita por teléfono, texto o correo electrónico, y te contactaremos con horarios alternativos si tu horario preferido no está disponible.",
+    "faq.q7":"¿Cuál es su horario?",
+    "faq.a7":"Lunes a viernes de 8:00 am a 3:00 pm, sábados de 8:00 am a 1:00 pm, y cerrados los domingos.",
     "privacy.title":"Política de Privacidad","privacy.updated":"Última actualización: 1 de enero de 2025",
     "privacy.intro":"Maria Auto & Traffic School (\"nosotros\") opera este sitio web. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos la información personal que proporcionas al usar nuestro sitio o enviar una consulta a través de nuestro formulario de contacto.",
     "privacy.h1":"1. Información Que Recopilamos","privacy.p1":"Cuando envías una solicitud de reserva, podemos recopilar tu nombre, número de teléfono, servicio de interés, idioma preferido y cualquier nota que proporciones. No recopilamos información de pago, números de Seguro Social ni identificaciones gubernamentales.",
     "privacy.h2":"2. Cómo Usamos Tu Información","privacy.p2":"Usamos tu información únicamente para responder a tu consulta, contactarte para programar tu cita y brindarte los servicios solicitados. Nunca vendemos ni compartimos tu información con fines de marketing.",
-    "privacy.h3":"3. Cómo Almacenamos Tu Información","privacy.p3":"Las solicitudes se procesan de forma segura a través de Netlify Forms. Consulta las prácticas de Netlify en <a href=\"https://www.netlify.com/privacy/\" target=\"_blank\" rel=\"noopener\">netlify.com/privacy</a>. Eliminamos las solicitudes periódicamente una vez resueltas.",
+    "privacy.h3":"3. Cómo Almacenamos Tu Información","privacy.p3":"Las solicitudes se procesan de forma segura a través de Formspree, un servicio externo de formularios. Consulta las prácticas de Formspree en <a href=\"https://formspree.io/legal/privacy-policy/\" target=\"_blank\" rel=\"noopener\">formspree.io/legal/privacy-policy</a>. Eliminamos las solicitudes periódicamente una vez resueltas.",
     "privacy.h4":"4. Cookies y Rastreo","privacy.p4":"Este sitio no utiliza cookies, análisis ni tecnología publicitaria. No se rastrean datos de navegación.",
     "privacy.h5":"5. Tus Derechos","privacy.p5":"Puedes solicitar conocer, corregir o eliminar la información que tenemos sobre ti, o cancelar futuras comunicaciones, contactándonos directamente.",
     "privacy.h6":"6. Contáctanos","privacy.p6":"Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Teléfono: <a href=\"tel:+13052168166\">(305) 216-8166</a>"
@@ -947,6 +1191,14 @@ window.addEventListener('scroll', () => {
   document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(0,0,0,0.4)' : 'none';
 });
 
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  backToTopBtn.classList.toggle('visible', window.scrollY > window.innerHeight * 0.8);
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
@@ -969,9 +1221,41 @@ let savedLang = 'en';
 try { savedLang = localStorage.getItem('maria_lang') || 'en'; } catch(e) {}
 setLanguage(savedLang);
 
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      if (openItem !== item) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    if (isOpen) {
+      item.classList.remove('open');
+      answer.style.maxHeight = null;
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
 const privacyModal = document.getElementById('privacy-modal');
 document.getElementById('privacy-link').addEventListener('click', (e) => {
   e.preventDefault(); privacyModal.classList.add('open'); document.body.style.overflow = 'hidden';
+});
+document.addEventListener('click', (e) => {
+  if (e.target && e.target.id === 'consent-privacy-link') {
+    e.preventDefault(); privacyModal.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
 });
 document.getElementById('modal-close').addEventListener('click', () => {
   privacyModal.classList.remove('open'); document.body.style.overflow = '';
