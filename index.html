@@ -253,6 +253,49 @@
   .range-toggle-row label { font-size: 0.78rem; color: rgba(255,255,255,0.55); cursor: pointer; margin: 0; text-transform: none; letter-spacing: 0; }
   .end-date-group { display: none; }
   .end-date-group.visible { display: block; }
+  .contact-pref-row { display: flex; gap: 10px; }
+  .contact-pref-item { flex: 1; position: relative; }
+  .contact-pref-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .contact-pref-item label {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; font-size: 0.85rem; color: rgba(255,255,255,0.7);
+    padding: 10px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.2s; user-select: none; text-align: center;
+  }
+  .contact-pref-item label:hover { border-color: rgba(201,168,76,0.4); }
+  .contact-pref-item input:checked + label { border-color: var(--gold); background: rgba(201,168,76,0.12); color: #fff; }
+  .field-error-msg { font-size: 0.78rem; color: #e8704a; margin-top: 6px; display: none; }
+  .field-error-msg.visible { display: block; }
+  .booking-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 250;
+    background: rgba(8,15,30,0.85); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .booking-modal-overlay.open { display: flex; }
+  .booking-modal-box {
+    background: var(--warm-white); border-radius: 16px; max-width: 460px; width: 100%;
+    padding: 30px 28px; box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    animation: modal-in 0.25s ease; text-align: center;
+  }
+  .booking-modal-icon {
+    width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 16px;
+    background: rgba(201,168,76,0.15); border: 2px solid rgba(201,168,76,0.4);
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .booking-modal-box h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+  .booking-modal-box p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 22px; }
+  .booking-modal-actions { display: flex; gap: 10px; }
+  .booking-modal-actions button {
+    flex: 1; padding: 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  }
+  .booking-modal-cancel { background: rgba(0,0,0,0.06); color: var(--text-mid); }
+  .booking-modal-cancel:hover { background: rgba(0,0,0,0.1); }
+  .booking-modal-confirm { background: var(--gold); color: var(--navy); }
+  .booking-modal-confirm:hover { background: var(--gold-light); }
   .checkbox-item { position: relative; }
   .checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
   .checkbox-item label {
@@ -580,7 +623,24 @@
         <div class="form-group"><label data-i18n="form.first">First Name</label><input type="text" name="first_name" placeholder="Maria" required></div>
         <div class="form-group"><label data-i18n="form.last">Last Name</label><input type="text" name="last_name" placeholder="Garcia" required></div>
       </div>
-      <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" placeholder="(305) 000-0000" required></div>
+      <div class="form-row">
+        <div class="form-group"><label data-i18n="form.phone">Phone Number</label><input type="tel" name="phone" id="field-phone" placeholder="(305) 000-0000"></div>
+        <div class="form-group"><label data-i18n="form.email">Email Address</label><input type="email" name="email" id="field-email" placeholder="you@email.com"></div>
+      </div>
+      <p class="field-error-msg" id="contact-required-error" data-i18n="form.contactRequiredError">Please provide a phone number or email address so we can reach you.</p>
+      <div class="form-group">
+        <label data-i18n="form.contactPref" style="display:block;margin-bottom:10px">How should we contact you?</label>
+        <div class="contact-pref-row">
+          <div class="contact-pref-item">
+            <input type="checkbox" id="pref-text" name="contact_preference" value="Text">
+            <label for="pref-text">📱 <span data-i18n="form.prefText">Text</span></label>
+          </div>
+          <div class="contact-pref-item">
+            <input type="checkbox" id="pref-email" name="contact_preference" value="Email">
+            <label for="pref-email">📧 <span data-i18n="form.prefEmail">Email</span></label>
+          </div>
+        </div>
+      </div>
       <div class="form-group">
         <label data-i18n="form.service" style="display:block;margin-bottom:10px">Service Interested In</label>
         <div class="checkbox-group">
@@ -661,6 +721,19 @@
   </div>
 </footer>
 
+<!-- BOOKING CONFIRMATION MODAL -->
+<div class="booking-modal-overlay" id="booking-modal" role="dialog" aria-modal="true" aria-label="Booking request notice">
+  <div class="booking-modal-box">
+    <div class="booking-modal-icon">📋</div>
+    <h3 data-i18n="form.modalTitle">This is a request, not a confirmed booking</h3>
+    <p data-i18n="form.modalBody">Submitting this form does not guarantee your selected date and time. If your preferred slot isn't available, Maria or a team member will reach out by phone, text, or email to find a time that works.</p>
+    <div class="booking-modal-actions">
+      <button type="button" class="booking-modal-cancel" id="booking-modal-cancel" data-i18n="form.modalCancel">Go Back</button>
+      <button type="button" class="booking-modal-confirm" id="booking-modal-confirm" data-i18n="form.modalConfirm">I Understand, Submit</button>
+    </div>
+  </div>
+</div>
+
 <!-- PRIVACY MODAL -->
 <div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-label="Privacy Policy">
   <div class="modal-box">
@@ -729,6 +802,11 @@ const translations = {
     "contact.hoursValue":"Mon–Fri 8am–3pm · Sat 8am–1pm · Sun Closed",
     "contact.languages":"Languages",
     "form.title":"Book Your Session","form.first":"First Name","form.last":"Last Name","form.phone":"Phone Number",
+    "form.email":"Email Address","form.contactPref":"How should we contact you?","form.prefText":"Text","form.prefEmail":"Email",
+    "form.contactRequiredError":"Please provide a phone number or email address so we can reach you.",
+    "form.modalTitle":"This is a request, not a confirmed booking",
+    "form.modalBody":"Submitting this form does not guarantee your selected date and time. If your preferred slot isn't available, Maria or a team member will reach out by phone, text, or email to find a time that works.",
+    "form.modalCancel":"Go Back","form.modalConfirm":"I Understand, Submit",
     "form.service":"Service Interested In","form.serviceSelect":"Select a service…",
     "form.opt1":"Written Knowledge Test","form.opt2":"Practical Driving Exam","form.opt3":"Driving Lessons","form.opt4":"Alcohol & Drug Course","form.opt5":"Theoretical Exam (prep included)",
     "form.lang":"Preferred Language","form.notes":"Questions or Notes","form.notesPlaceholder":"Tell us a little about where you are in the process…",
@@ -792,6 +870,11 @@ const translations = {
     "contact.hoursValue":"Lun–Vie 8am–3pm · Sáb 8am–1pm · Dom Cerrado",
     "contact.languages":"Idiomas",
     "form.title":"Reserva Tu Cita","form.first":"Nombre","form.last":"Apellido","form.phone":"Número de Teléfono",
+    "form.email":"Correo Electrónico","form.contactPref":"¿Cómo prefieres que te contactemos?","form.prefText":"Texto","form.prefEmail":"Correo",
+    "form.contactRequiredError":"Por favor proporciona un número de teléfono o correo electrónico para poder contactarte.",
+    "form.modalTitle":"Esto es una solicitud, no una reserva confirmada",
+    "form.modalBody":"Enviar este formulario no garantiza tu fecha y hora seleccionada. Si tu horario preferido no está disponible, Maria o un miembro del equipo se pondrá en contacto por teléfono, texto o correo electrónico para encontrar un horario que funcione.",
+    "form.modalCancel":"Regresar","form.modalConfirm":"Entiendo, Enviar",
     "form.service":"Servicio de Interés","form.serviceSelect":"Selecciona un servicio…",
     "form.opt1":"Examen Teórico Escrito","form.opt2":"Examen Práctico de Manejo","form.opt3":"Clases de Manejo","form.opt4":"Curso de Alcohol y Drogas","form.opt5":"Preparación de Examen Teórico",
     "form.lang":"Idioma Preferido","form.notes":"Preguntas o Notas","form.notesPlaceholder":"Cuéntanos un poco sobre en qué parte del proceso te encuentras…",
