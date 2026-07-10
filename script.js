@@ -520,6 +520,108 @@ const contactError = document.getElementById('contact-required-error');
 const fieldPhone = document.getElementById('field-phone');
 const fieldEmail = document.getElementById('field-email');
 
+function buildFormattedMessage() {
+  const line = '─'.repeat(40);
+  const isEs = document.getElementById('html-root').lang === 'es';
+
+  function val(name) {
+    const el = bookingForm.querySelector(`[name="${name}"]`);
+    return el ? el.value.trim() : '';
+  }
+  function checked(name) {
+    return Array.from(bookingForm.querySelectorAll(`[name="${name}"]:checked`)).map(el => el.value);
+  }
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    try {
+      return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    } catch(e) { return dateStr; }
+  }
+
+  const lines = [];
+  lines.push('NEW BOOKING REQUEST');
+  lines.push(line);
+  lines.push('');
+
+  // Contact info
+  const firstName = val('first_name');
+  const lastName  = val('last_name');
+  if (firstName || lastName) lines.push(`Name:     ${firstName} ${lastName}`.trim());
+  const phone = val('phone');
+  if (phone) lines.push(`Phone:    ${phone}`);
+  const email = val('email');
+  if (email) lines.push(`Email:    ${email}`);
+  const prefs = checked('contact_preference');
+  if (prefs.length) lines.push(`Contact:  ${prefs.join(' or ')} preferred`);
+  const lang = val('language');
+  if (lang) lines.push(`Language: ${lang}`);
+  lines.push('');
+
+  // Services
+  const selectedServices = checked('services');
+  if (selectedServices.length) {
+    lines.push('SERVICES REQUESTED');
+    lines.push(line);
+
+    selectedServices.forEach(service => {
+      const slug = service.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+      lines.push(`• ${service}`);
+
+      if (service === 'Driving Lessons') {
+        // Location
+        const locRadio = bookingForm.querySelector(`[name="lessons_location__${slug}"]:checked`);
+        if (locRadio) lines.push(`  Location:   ${locRadio.value}`);
+        const address = val(`lessons_address__${slug}`);
+        if (address) lines.push(`  Address:    ${address}`);
+        // Start date
+        const startDate = val(`lessons_start_date__${slug}`);
+        if (startDate) lines.push(`  Start date: ${formatDate(startDate)}`);
+        // Days
+        const days = checked(`lessons_days__${slug}`);
+        if (days.length) lines.push(`  Days:       ${days.join(', ')}`);
+        // Time
+        const time = val(`lessons_time__${slug}`);
+        if (time) lines.push(`  Time:       ${time}`);
+        // Count
+        const count = val(`lessons_count__${slug}`);
+        const countCustom = val(`lessons_count_custom__${slug}`);
+        if (count === 'other' && countCustom) lines.push(`  Lessons:    ${countCustom} (exact)`);
+        else if (count) lines.push(`  Lessons:    ${count}`);
+      } else {
+        // Standard single/range date
+        const date = val(`preferred_date__${slug}`);
+        const dateEnd = val(`preferred_date_end__${slug}`);
+        const time = val(`preferred_time__${slug}`);
+        if (date && dateEnd) {
+          lines.push(`  Date range: ${formatDate(date)} → ${formatDate(dateEnd)}`);
+        } else if (date) {
+          lines.push(`  Date:       ${formatDate(date)}`);
+        }
+        if (time) lines.push(`  Time:       ${time}`);
+      }
+
+      lines.push('');
+    });
+  }
+
+  // Notes
+  const notes = val('notes');
+  if (notes) {
+    lines.push('NOTES');
+    lines.push(line);
+    lines.push(notes);
+    lines.push('');
+  }
+
+  // Referral
+  const referral = val('referral_source');
+  if (referral && referral !== 'Prefer not to say' && referral !== 'Prefiero no decir') {
+    lines.push(`How they found us: ${referral}`);
+  }
+
+  return lines.join('\n');
+}
+
 function performActualSubmit() {
   const btn = document.getElementById('submit-btn');
   const originalBtnText = btn.textContent;
@@ -528,6 +630,14 @@ function performActualSubmit() {
   let formData;
   try {
     formData = new FormData(bookingForm);
+    // Inject the pre-formatted summary as a dedicated field
+    // so Formspree's email shows clean readable content
+    formData.set('_formatted_summary', buildFormattedMessage());
+    // Also set subject line so the email inbox shows something useful
+    const firstName = formData.get('first_name') || '';
+    const services = Array.from(bookingForm.querySelectorAll('[name="services"]:checked')).map(el => el.value);
+    const serviceShort = services.length ? services[0].split(' ')[0] : 'Appointment';
+    formData.set('_subject', `New Booking Request — ${firstName ? firstName + ' — ' : ''}${serviceShort}${services.length > 1 ? ' + more' : ''}`);
   } catch (err) {
     console.error('FormData construction failed, falling back to native submit:', err);
     bookingForm.submit();
@@ -557,8 +667,6 @@ function performActualSubmit() {
     .catch(err => {
       if (timeoutId) clearTimeout(timeoutId);
       console.error('Booking submission via fetch failed, falling back to native form submit:', err);
-      // Fall back to a plain native form submission so the request still reaches
-      // Formspree even if fetch failed for a browser- or network-specific reason.
       btn.textContent = 'Sending…';
       bookingForm.submit();
     });
