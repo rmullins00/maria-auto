@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    "nav.services":"Services","nav.process":"How It Works","nav.reviews":"Reviews","nav.contact":"Contact","nav.cta":"Get Started",
+    "nav.home":"Home","nav.services":"Services","nav.process":"How It Works","nav.reviews":"Reviews","nav.contact":"Booking","nav.cta":"Book Now",
     "hero.badge":"Dade County's Trusted Driving School",
     "hero.headline":"Drive With<em>Confidence.</em>",
     "hero.sub":"Your license. Your freedom. Your future.",
@@ -89,7 +89,7 @@ const translations = {
     "privacy.h6":"6. Contact Us","privacy.p6":"Maria Auto & Traffic School · 281 NW 82nd Ave, Miami, FL 33126 · Phone: <a href=\"tel:+13052168166\">(305) 216-8166</a>"
   },
   es: {
-    "nav.services":"Servicios","nav.process":"Cómo Funciona","nav.reviews":"Reseñas","nav.contact":"Contacto","nav.cta":"Empezar",
+    "nav.home":"Inicio","nav.services":"Servicios","nav.process":"Cómo Funciona","nav.reviews":"Reseñas","nav.contact":"Reservar","nav.cta":"Reservar Ahora",
     "hero.badge":"La Autoescuela de Confianza del Condado de Dade",
     "hero.headline":"Maneja Con<em>Confianza.</em>",
     "hero.sub":"Tu licencia. Tu libertad. Tu futuro.",
@@ -375,17 +375,33 @@ function buildServiceDatetimeBlock(serviceCheckbox) {
         </div>
         <div class="form-group">
           <label>${isEs ? 'Cuántas Clases Deseas' : 'How Many Lessons'}</label>
-          <select name="lessons_count__${slug}" required>
+          <select name="lessons_count__${slug}" class="lessons-count-select" required>
             <option value="" disabled selected>${isEs ? 'Selecciona…' : 'Select…'}</option>
             <option>${isEs ? '1 clase' : '1 lesson'}</option>
             <option>${isEs ? '3 clases' : '3 lessons'}</option>
             <option>${isEs ? '5 clases' : '5 lessons'}</option>
             <option>${isEs ? '10+ clases' : '10+ lessons'}</option>
+            <option value="other">${isEs ? 'Otro — especificar número exacto' : 'Other — enter exact number'}</option>
             <option>${isEs ? 'Aún no estoy seguro/a' : 'Not sure yet'}</option>
           </select>
         </div>
       </div>
+      <div class="form-group lessons-count-custom-group" id="lessons-count-custom-${slug}">
+        <label>${isEs ? 'Número Exacto de Clases' : 'Exact Number of Lessons'}</label>
+        <input type="number" name="lessons_count_custom__${slug}" class="lessons-count-custom-input" min="1" max="200" placeholder="${isEs ? 'ej. 8' : 'e.g. 8'}">
+      </div>
     `;
+
+    const lessonsCountSelect = block.querySelector('.lessons-count-select');
+    const lessonsCountCustomGroup = block.querySelector(`#lessons-count-custom-${slug}`);
+    const lessonsCountCustomInput = block.querySelector('.lessons-count-custom-input');
+
+    lessonsCountSelect.addEventListener('change', function () {
+      const isOther = this.value === 'other';
+      lessonsCountCustomGroup.classList.toggle('visible', isOther);
+      lessonsCountCustomInput.required = isOther;
+      if (!isOther) lessonsCountCustomInput.value = '';
+    });
 
     const locationRadios = block.querySelectorAll(`input[name="lessons_location__${slug}"]`);
     const addressGroup = block.querySelector(`#location-address-group-${slug}`);
@@ -506,29 +522,60 @@ const fieldEmail = document.getElementById('field-email');
 
 function performActualSubmit() {
   const btn = document.getElementById('submit-btn');
+  const originalBtnText = btn.textContent;
   btn.textContent = 'Sending…'; btn.disabled = true;
-  const formData = new FormData(bookingForm);
+
+  let formData;
+  try {
+    formData = new FormData(bookingForm);
+  } catch (err) {
+    console.error('FormData construction failed, falling back to native submit:', err);
+    bookingForm.submit();
+    return;
+  }
+
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timeoutId = controller ? setTimeout(() => controller.abort(), 15000) : null;
+
   fetch('https://formspree.io/f/mrewngqb', {
     method: 'POST',
     body: formData,
-    headers: { 'Accept': 'application/json' }
+    headers: { 'Accept': 'application/json' },
+    signal: controller ? controller.signal : undefined
   })
     .then(res => {
+      if (timeoutId) clearTimeout(timeoutId);
       if (res.ok) {
         bookingForm.style.display = 'none';
         formSuccess.style.display = 'block';
+        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
-        throw new Error('Form error');
+        console.error('Formspree responded with non-OK status:', res.status);
+        throw new Error('Form error: ' + res.status);
       }
     })
-    .catch(() => {
-      btn.textContent = 'Something went wrong — please call us';
-      btn.style.background = 'rgba(232,112,74,0.8)'; btn.disabled = false;
-      setTimeout(() => { btn.textContent = 'Book Your Session'; btn.style.background = ''; }, 5000);
+    .catch(err => {
+      if (timeoutId) clearTimeout(timeoutId);
+      console.error('Booking submission via fetch failed, falling back to native form submit:', err);
+      // Fall back to a plain native form submission so the request still reaches
+      // Formspree even if fetch failed for a browser- or network-specific reason.
+      btn.textContent = 'Sending…';
+      bookingForm.submit();
     });
 }
 
 if (bookingForm) {
+  // If the browser fell back to a native form submission (fetch was unavailable or failed),
+  // Formspree redirects back here with ?submitted=true — catch that and show success too.
+  if (window.location.search.includes('submitted=true')) {
+    bookingForm.style.display = 'none';
+    formSuccess.style.display = 'block';
+    try {
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    } catch (err) { /* not critical if this fails */ }
+  }
+
   bookingForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
