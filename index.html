@@ -296,6 +296,19 @@
   .booking-modal-cancel:hover { background: rgba(0,0,0,0.1); }
   .booking-modal-confirm { background: var(--gold); color: var(--navy); }
   .booking-modal-confirm:hover { background: var(--gold-light); }
+  .day-pill-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+  .day-pill-item { position: relative; }
+  .day-pill-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .day-pill-item label {
+    display: flex; align-items: center; justify-content: center;
+    width: 42px; height: 38px; border-radius: 6px; cursor: pointer;
+    font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04);
+    transition: all 0.2s; user-select: none;
+  }
+  .day-pill-item label:hover { border-color: rgba(201,168,76,0.4); }
+  .day-pill-item input:checked + label { border-color: var(--gold); background: rgba(201,168,76,0.15); color: #fff; }
+  .lessons-note { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; margin: 4px 0 12px; }
   .checkbox-item { position: relative; }
   .checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
   .checkbox-item label {
@@ -1003,6 +1016,65 @@ function buildServiceDatetimeBlock(serviceCheckbox) {
   const { min, max } = getDateMinMax();
   const isEs = document.getElementById('html-root').lang === 'es';
 
+  if (serviceValue === 'Driving Lessons') {
+    const days = isEs
+      ? [['Mon','Lun'],['Tue','Mar'],['Wed','Mié'],['Thu','Jue'],['Fri','Vie'],['Sat','Sáb']]
+      : [['Mon','Mon'],['Tue','Tue'],['Wed','Wed'],['Thu','Thu'],['Fri','Fri'],['Sat','Sat']];
+
+    const dayPills = days.map(([value, label]) => `
+      <div class="day-pill-item">
+        <input type="checkbox" id="day-${slug}-${value}" name="lessons_days__${slug}" value="${value}">
+        <label for="day-${slug}-${value}">${label}</label>
+      </div>
+    `).join('');
+
+    block.innerHTML = `
+      <div class="service-datetime-label"><span class="dot"></span><span>${serviceName}</span></div>
+      <p class="lessons-note">${isEs ? 'Las clases de manejo suelen ser sesiones continuas. Cuéntanos tu disponibilidad general y coordinaremos las fechas exactas contigo.' : 'Driving lessons are usually an ongoing series. Tell us your general availability and we\'ll coordinate exact dates with you.'}</p>
+      <div class="form-group">
+        <label>${isEs ? 'Fecha de Inicio Preferida' : 'Preferred Start Date'}</label>
+        <input type="date" name="lessons_start_date__${slug}" class="service-date-input" min="${min}" max="${max}" required>
+      </div>
+      <div class="form-group">
+        <label style="margin-bottom:8px;display:block">${isEs ? 'Días Preferidos (selecciona todos los que apliquen)' : 'Preferred Days (select all that apply)'}</label>
+        <div class="day-pill-row">${dayPills}</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>${isEs ? 'Hora Preferida' : 'Preferred Time'}</label>
+          <select name="lessons_time__${slug}" class="service-time-input" required>
+            <option value="" disabled selected>${isEs ? 'Selecciona una hora…' : 'Select a time…'}</option>
+            <option>${isEs ? 'Mañana (8am–11am)' : 'Morning (8am–11am)'}</option>
+            <option>${isEs ? 'Mediodía (11am–1pm)' : 'Midday (11am–1pm)'}</option>
+            <option>${isEs ? 'Tarde (1pm–3pm)' : 'Afternoon (1pm–3pm)'}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>${isEs ? 'Cuántas Clases Deseas' : 'How Many Lessons'}</label>
+          <select name="lessons_count__${slug}" required>
+            <option value="" disabled selected>${isEs ? 'Selecciona…' : 'Select…'}</option>
+            <option>${isEs ? '1 clase' : '1 lesson'}</option>
+            <option>${isEs ? '3 clases' : '3 lessons'}</option>
+            <option>${isEs ? '5 clases' : '5 lessons'}</option>
+            <option>${isEs ? '10+ clases' : '10+ lessons'}</option>
+            <option>${isEs ? 'Aún no estoy seguro/a' : 'Not sure yet'}</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    const startDateInput = block.querySelector('.service-date-input');
+    startDateInput.addEventListener('input', function () {
+      const selected = new Date(this.value + 'T00:00:00');
+      if (selected.getDay() === 0) {
+        alert(isEs ? 'Estamos cerrados los domingos — elige otro día.' : "We're closed on Sundays — please choose another day.");
+        this.value = '';
+      }
+    });
+
+    return block;
+  }
+
   block.innerHTML = `
     <div class="service-datetime-label"><span class="dot"></span><span>${serviceName}</span></div>
     <div class="form-row">
@@ -1090,30 +1162,74 @@ document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"
 
 const bookingForm = document.getElementById('booking-form');
 const formSuccess = document.getElementById('form-success');
+const bookingModal = document.getElementById('booking-modal');
+const contactError = document.getElementById('contact-required-error');
+const fieldPhone = document.getElementById('field-phone');
+const fieldEmail = document.getElementById('field-email');
+
+function performActualSubmit() {
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  const formData = new FormData(bookingForm);
+  fetch('https://formspree.io/f/mrewngqb', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  })
+    .then(res => {
+      if (res.ok) {
+        bookingForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+      } else {
+        throw new Error('Form error');
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Something went wrong — please call us';
+      btn.style.background = 'rgba(232,112,74,0.8)'; btn.disabled = false;
+      setTimeout(() => { btn.textContent = 'Book Your Session'; btn.style.background = ''; }, 5000);
+    });
+}
+
 if (bookingForm) {
   bookingForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    const btn = document.getElementById('submit-btn');
-    btn.textContent = 'Sending…'; btn.disabled = true;
-    const formData = new FormData(bookingForm);
-    fetch('https://formspree.io/f/mrewngqb', {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    })
-      .then(res => {
-        if (res.ok) {
-          bookingForm.style.display = 'none';
-          formSuccess.style.display = 'block';
-        } else {
-          throw new Error('Form error');
-        }
-      })
-      .catch(() => {
-        btn.textContent = 'Something went wrong — please call us';
-        btn.style.background = 'rgba(232,112,74,0.8)'; btn.disabled = false;
-        setTimeout(() => { btn.textContent = 'Book Your Session'; btn.style.background = ''; }, 5000);
-      });
+
+    const hasPhone = fieldPhone.value.trim().length > 0;
+    const hasEmail = fieldEmail.value.trim().length > 0;
+
+    if (!hasPhone && !hasEmail) {
+      contactError.classList.add('visible');
+      fieldPhone.style.borderColor = 'rgba(232,112,74,0.6)';
+      fieldEmail.style.borderColor = 'rgba(232,112,74,0.6)';
+      fieldPhone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    contactError.classList.remove('visible');
+    fieldPhone.style.borderColor = '';
+    fieldEmail.style.borderColor = '';
+
+    bookingModal.classList.add('open');
+  });
+
+  [fieldPhone, fieldEmail].forEach(field => {
+    field.addEventListener('input', () => {
+      if (fieldPhone.value.trim() || fieldEmail.value.trim()) {
+        contactError.classList.remove('visible');
+        fieldPhone.style.borderColor = '';
+        fieldEmail.style.borderColor = '';
+      }
+    });
+  });
+
+  document.getElementById('booking-modal-cancel').addEventListener('click', () => {
+    bookingModal.classList.remove('open');
+  });
+
+  document.getElementById('booking-modal-confirm').addEventListener('click', () => {
+    bookingModal.classList.remove('open');
+    performActualSubmit();
   });
 }
 </script>
