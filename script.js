@@ -735,15 +735,27 @@ function performActualSubmit() {
 
   let formData;
   try {
-    formData = new FormData(bookingForm);
-    // Inject the pre-formatted summary as a dedicated field
-    // so Formspree's email shows clean readable content
-    formData.set('_formatted_summary', buildFormattedMessage());
-    // Also set subject line so the email inbox shows something useful
-    const firstName = formData.get('first_name') || '';
+    const firstName = (bookingForm.querySelector('[name="first_name"]')?.value || '').trim();
+    const lastName = (bookingForm.querySelector('[name="last_name"]')?.value || '').trim();
+    const phone = (bookingForm.querySelector('[name="phone"]')?.value || '').trim();
+    const email = (bookingForm.querySelector('[name="email"]')?.value || '').trim();
+    const gotcha = bookingForm.querySelector('[name="_gotcha"]')?.value || '';
     const services = Array.from(bookingForm.querySelectorAll('[name="services"]:checked')).map(el => el.value);
     const serviceShort = services.length ? services[0].split(' ')[0] : 'Appointment';
+
+    // Send Formspree a small, clean payload instead of every raw field —
+    // the notification email just shows name/phone/email/message rather
+    // than a 20-line dump of every wizard field. All the structured detail
+    // (services, dates, days, lesson counts, etc.) still lives in the
+    // formatted "message" body below, it's just not repeated as separate
+    // top-level fields.
+    formData = new FormData();
+    formData.set('_gotcha', gotcha);
+    formData.set('name', `${firstName} ${lastName}`.trim());
+    if (phone) formData.set('phone', phone);
+    if (email) formData.set('email', email); // Formspree auto-sets Reply-To when a field is literally named "email"
     formData.set('_subject', `New Booking Request — ${firstName ? firstName + ' — ' : ''}${serviceShort}${services.length > 1 ? ' + more' : ''}`);
+    formData.set('message', buildFormattedMessage());
   } catch (err) {
     console.error('FormData construction failed, falling back to native submit:', err);
     bookingForm.submit();
