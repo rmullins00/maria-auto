@@ -1,4 +1,4 @@
-  :root {
+:root {
     --navy: #0d1f3c;
     --navy-mid: #162d52;
     --gold: #c9a84c;
@@ -198,6 +198,48 @@
   .contact-item-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2px; }
   .contact-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15); border-radius: 14px; padding: 34px; }
   .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff; margin-bottom: 22px; }
+
+  /* ── BOOKING WIZARD ── */
+  .wizard-progress { display: flex; align-items: flex-start; margin-bottom: 28px; }
+  .wizard-progress-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+  .wizard-progress-step:not(:last-child)::after {
+    content: ''; position: absolute; top: 15px; left: calc(50% + 21px); right: calc(-50% + 21px);
+    height: 1px; background: rgba(255,255,255,0.15); transition: background 0.25s;
+  }
+  .wizard-progress-step.completed:not(:last-child)::after { background: var(--gold); }
+  .wizard-progress-num {
+    width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+    position: relative; z-index: 1; transition: all 0.2s; flex-shrink: 0;
+  }
+  .wizard-progress-step.active .wizard-progress-num { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+  .wizard-progress-step.completed .wizard-progress-num { border-color: var(--gold); background: rgba(201,168,76,0.15); color: var(--gold-light); }
+  .wizard-progress-label {
+    font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-top: 7px; text-align: center; line-height: 1.3;
+  }
+  .wizard-progress-step.active .wizard-progress-label { color: var(--gold-light); }
+  .wizard-progress-step.completed .wizard-progress-label { color: rgba(232,201,122,0.6); }
+  .wizard-progress-step.reachable { cursor: pointer; }
+  .wizard-progress-step.reachable:hover .wizard-progress-num { border-color: var(--gold); }
+
+  .wizard-step { display: none; }
+  .wizard-step.active { display: block; animation: wizard-fade 0.3s ease; }
+  @keyframes wizard-fade { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+
+  .wizard-nav { display: flex; gap: 10px; margin-top: 22px; }
+  .wizard-nav .btn-submit { flex: 1; margin-top: 0; }
+  .btn-wizard-back {
+    flex: 0 0 auto; padding: 14px 20px; min-width: 96px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7); border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-wizard-back:hover { border-color: rgba(201,168,76,0.4); color: #fff; }
+
   .form-group { margin-bottom: 16px; }
   .form-group label { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
   .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 12px 14px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
@@ -461,6 +503,9 @@
     .form-row { grid-template-columns: 1fr; }
     .reviews-track { padding: 6px 20px; }
     .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
+    .wizard-progress-label { font-size: 0.56rem; letter-spacing: 0.03em; }
+    .wizard-nav { flex-direction: column; }
+    .btn-wizard-back { width: 100%; min-width: 0; }
   }
 
   /* ── ACCESSIBILITY: VISIBLE FOCUS STATES ── */
@@ -479,6 +524,10 @@
     outline-offset: 2px;
   }
   .nav-hamburger:focus-visible, .modal-close:focus-visible, .lang-btn:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+  .wizard-progress-step.reachable:focus-visible .wizard-progress-num {
     outline: 2px solid var(--gold-light);
     outline-offset: 2px;
   }
