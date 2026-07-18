@@ -61,6 +61,9 @@ const translations = {
     "form.timeMorning":"Morning (8am–11am)","form.timeMidday":"Midday (11am–1pm)","form.timeAfternoon":"Afternoon (1pm–3pm)",
     "form.whatsapp":"Prefer to text us instead? Message us on WhatsApp",
     "form.submit":"Book Your Session","form.successTitle":"We received your request!","form.successBody":"Maria or a team member will be in touch with you shortly.",
+    "wizard.step1":"Your Info","wizard.step2":"Services","wizard.step3":"Schedule","wizard.step4":"Finish",
+    "wizard.next":"Next","wizard.back":"Back",
+    "wizard.servicesRequiredError":"Please select at least one service to continue.",
     "footer.tagline":"Helping Dade County residents earn their license with confidence, warmth, and expertise. Proudly serving our community in English and Spanish.",
     "footer.servicesHeader":"Services","footer.infoHeader":"Info","footer.why":"Why Choose Us","footer.faq":"FAQ","footer.privacy":"Privacy Policy","footer.badge":"Proudly Serving Dade County",
     "faq.label":"Common Questions","faq.title":"Frequently Asked Questions",
@@ -150,6 +153,9 @@ const translations = {
     "form.timeMorning":"Mañana (8am–11am)","form.timeMidday":"Mediodía (11am–1pm)","form.timeAfternoon":"Tarde (1pm–3pm)",
     "form.whatsapp":"¿Prefieres escribirnos? Contáctanos por WhatsApp",
     "form.submit":"Reserva Tu Cita","form.successTitle":"¡Recibimos tu solicitud!","form.successBody":"Maria o un miembro del equipo se pondrá en contacto contigo pronto.",
+    "wizard.step1":"Tus Datos","wizard.step2":"Servicios","wizard.step3":"Horario","wizard.step4":"Finalizar",
+    "wizard.next":"Siguiente","wizard.back":"Atrás",
+    "wizard.servicesRequiredError":"Por favor selecciona al menos un servicio para continuar.",
     "footer.tagline":"Ayudando a los residentes del Condado de Dade a obtener su licencia con confianza, calidez y experiencia. Servimos con orgullo a nuestra comunidad en inglés y español.",
     "footer.servicesHeader":"Servicios","footer.infoHeader":"Información","footer.why":"Por Qué Elegirnos","footer.faq":"Preguntas Frecuentes","footer.privacy":"Política de Privacidad","footer.badge":"Sirviendo con Orgullo al Condado de Dade",
     "faq.label":"Preguntas Comunes","faq.title":"Preguntas Frecuentes",
@@ -502,6 +508,9 @@ document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"
 
     const anyChecked = document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"]:checked').length > 0;
     datetimePlaceholder.classList.toggle('visible', !anyChecked);
+
+    const servicesError = document.getElementById('services-required-error');
+    if (servicesError && anyChecked) servicesError.classList.remove('visible');
   });
 
   const hintId = checkbox.getAttribute('data-hint');
@@ -519,6 +528,103 @@ const bookingModal = document.getElementById('booking-modal');
 const contactError = document.getElementById('contact-required-error');
 const fieldPhone = document.getElementById('field-phone');
 const fieldEmail = document.getElementById('field-email');
+
+// ===== BOOKING WIZARD (Info → Services → Schedule → Finish) =====
+const wizardSteps = Array.from(document.querySelectorAll('.wizard-step'));
+const wizardProgressSteps = Array.from(document.querySelectorAll('.wizard-progress-step'));
+let wizardCurrentStep = 1;
+let wizardMaxStepReached = 1;
+
+function wizardGoToStep(step) {
+  wizardCurrentStep = step;
+  wizardSteps.forEach(el => {
+    el.classList.toggle('active', Number(el.getAttribute('data-step')) === step);
+  });
+  wizardProgressSteps.forEach(el => {
+    const s = Number(el.getAttribute('data-step-indicator'));
+    el.classList.toggle('active', s === step);
+    el.classList.toggle('completed', s < step);
+    el.classList.toggle('reachable', s <= wizardMaxStepReached);
+  });
+  const wizardBox = document.querySelector('.contact-form');
+  if (wizardBox) wizardBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wizardValidateStep(step) {
+  if (step === 1) {
+    const firstName = document.querySelector('#booking-form [name="first_name"]');
+    const lastName = document.querySelector('#booking-form [name="last_name"]');
+    if (firstName && !firstName.checkValidity()) { firstName.reportValidity(); return false; }
+    if (lastName && !lastName.checkValidity()) { lastName.reportValidity(); return false; }
+
+    const hasPhone = fieldPhone.value.trim().length > 0;
+    const hasEmail = fieldEmail.value.trim().length > 0;
+    if (!hasPhone && !hasEmail) {
+      contactError.classList.add('visible');
+      fieldPhone.style.borderColor = 'rgba(232,112,74,0.6)';
+      fieldEmail.style.borderColor = 'rgba(232,112,74,0.6)';
+      fieldPhone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    contactError.classList.remove('visible');
+    fieldPhone.style.borderColor = '';
+    fieldEmail.style.borderColor = '';
+    return true;
+  }
+
+  if (step === 2) {
+    const anyChecked = document.querySelectorAll('.checkbox-item input[type="checkbox"][name="services"]:checked').length > 0;
+    const err = document.getElementById('services-required-error');
+    if (!anyChecked) {
+      if (err) err.classList.add('visible');
+      return false;
+    }
+    if (err) err.classList.remove('visible');
+    return true;
+  }
+
+  if (step === 3) {
+    const requiredFields = document.querySelectorAll('#datetime-container [required]');
+    for (const field of requiredFields) {
+      if (!field.checkValidity()) {
+        field.reportValidity();
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+    }
+    return true;
+  }
+
+  return true;
+}
+
+document.querySelectorAll('[data-wizard-next]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!wizardValidateStep(wizardCurrentStep)) return;
+    const next = wizardCurrentStep + 1;
+    wizardMaxStepReached = Math.max(wizardMaxStepReached, next);
+    wizardGoToStep(next);
+  });
+});
+
+document.querySelectorAll('[data-wizard-back]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    wizardGoToStep(wizardCurrentStep - 1);
+  });
+});
+
+wizardProgressSteps.forEach(el => {
+  const jump = () => {
+    const s = Number(el.getAttribute('data-step-indicator'));
+    if (s <= wizardMaxStepReached) wizardGoToStep(s);
+  };
+  el.addEventListener('click', jump);
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); jump(); }
+  });
+});
+
+if (wizardSteps.length) wizardGoToStep(1);
 
 function buildFormattedMessage() {
   const line = '─'.repeat(40);
@@ -691,9 +797,12 @@ if (bookingForm) {
     const hasEmail = fieldEmail.value.trim().length > 0;
 
     if (!hasPhone && !hasEmail) {
+      // Safety net: this shouldn't be reachable since step 1 already gates on this,
+      // but if it is, send the person back to step 1 to fix it.
       contactError.classList.add('visible');
       fieldPhone.style.borderColor = 'rgba(232,112,74,0.6)';
       fieldEmail.style.borderColor = 'rgba(232,112,74,0.6)';
+      if (wizardSteps.length) wizardGoToStep(1);
       fieldPhone.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
